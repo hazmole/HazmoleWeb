@@ -1,0 +1,307 @@
+﻿<html>
+<head>
+	<title>請問骰神</title>
+	<meta name="Author" content="Hazmole">
+	<link rel="shortcut icon" href="../_img/hz_icon.ico">
+	<meta http-equiv="Content-Type" content="text/html" ;="" charset="UTF-8">
+	<meta http-equiv="Content-Language" content="zh-TW">
+	<!--Jquery-->
+	<script src="../_jquery/jquery-1.11.3.min.js"></script>
+	<!--Bootstrap-->
+	<script src="../_bootstrap/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="../_bootstrap/css/bootstrap.min.css">
+	<!--NavBar-->
+	<script src="../_js/CreateNavBar.js"></script>
+
+	<!--Custom-->
+	<script src="../_js/Downloader.js"></script>
+	<script>
+		var user_color = "#b7180a";
+		
+		//KeyBoard Input
+		document.onkeydown = Enter;
+		function Enter(){
+	        var key = event.keyCode;
+	        if(key==13){
+	        	//ENTER
+	        	Chat();
+	        }
+		}
+		
+		
+		
+		function Chat(){
+			var text = document.getElementById('msg_box').value;
+			if(text!="" && text!="\n"){
+				while(text[0]=='\n')	text = text.slice(1);
+				
+				//Formatting
+				text = TransCode(text);
+				
+				var user="<b>【"+document.getElementById('user').value+"】</b>";
+				var method=document.getElementById('method').value;
+				
+				if(method==1)	Ask(user, text);
+				else			Say(user, text);
+			}
+			document.getElementById('msg_box').value = "";
+		}
+		
+		function Output(new_text,user){
+			var obj = document.getElementById('chat_log');
+			
+			if(user==true){
+				new_text = "<font style='color:"+user_color+";'>"+new_text+"</font>";
+			}
+			
+			obj.innerHTML += new_text+"<br>";
+			obj.scrollTop = obj.scrollHeight;
+		}
+		//===========================
+		function Say(user, text){
+			Output(user+" 說："+text,true);
+		}
+		
+		function Ask(user, text){
+			var deco = "";
+			var ans  = "";
+			var prob = 0;
+			var arr;
+			
+			prob = Math.floor(100 * Math.random());
+			if(prob<10){
+				arr = ['隨意地','敬畏地','誠心地','迫切地','戰兢的','虔誠的'];
+				prob = Math.floor(arr.length * Math.random());
+				deco = arr[prob];
+			}
+			Output(user+ " "+deco+"問：" +text,true);
+			
+			var dice_quest = needRollDice(text);
+			if(dice_quest!=null){
+				RollDice(dice_quest[0]);
+			}
+			else{
+				Answer();
+			}
+			//alert(needRollDice(text));
+			
+
+			
+		}
+		
+		function needRollDice(text){
+			return text.match(/^(\d)+[Dd](\d)+([\+\-]\d+)*/g);
+		}
+		function RollDice(quest){
+			var result = [];
+			var sum = 0;
+			
+			
+			
+			var dice_part  = quest.split(/[dD\+\-]/);
+			var number = parseInt(dice_part[0]);
+			var dice   = parseInt(dice_part[1]);
+			if(number>20){
+				Output("　　偉大的骰神說了：<i><b>「幹你媽的骰子太多了。」</b></i>",false);
+				return ;
+			}
+			if(dice>10000){
+				Output("　　偉大的骰神說了：<i><b>「去你的骰子太大了。」</b></i>",false);
+				return ;
+			}
+			
+			
+			var offset_arr = quest.match(/[\+\-]\d+/g);
+			var offset = 0;
+			for(var i=0;offset_arr!=null && offset_arr[i]!=null;i++){
+				var symbo = offset_arr[i].charAt(0);
+				var num = offset_arr[i].match(/\d+/g)[0];
+				offset  += ((symbo=='+')?(1):(-1)) * parseInt(num);
+			}
+			
+			for(var i=0;i<number;i++){
+				var c = Math.floor(dice * Math.random()+1)
+				result.push(c);
+				sum += c;
+			}
+			sum += offset;
+			
+			var offset_str = "";
+			if(offset_arr!=null){
+				offset_str += "+";
+				if(offset<0)	offset_str += "("+offset+")";
+				else			offset_str += offset;
+			}
+			
+			
+			Output("　　骰神曰："+ quest+ " = ["+ result+ "]"+offset_str+" = "+sum,false);
+		}
+		function Answer(){
+			prob = Math.floor(100 * Math.random());
+			if(prob>5){
+				arr = ['是','是','是','是','否','否','否','否','（笑）'];
+				ans = arr[Math.floor(arr.length * Math.random())];
+				Output("　　偉大的骰神回答了：<i><b>「"+ans+"」</b></i>",false);
+			}
+			else{
+				Output("　　偉大的骰神沒有回應……",false);
+			}
+		}
+		
+		
+		
+		function Download(){
+			var text = document.getElementById('chat_log').innerHTML;
+			
+			if(text=="") return;
+			var url = Downloader.transStringToURL(text, "html");
+			Downloader.downloadFile("WhatDoesTheGodSay_Log.html", url);
+		}
+		
+		
+		//===========================
+		function TransCode(text){
+			
+			text = text.replace(/[\r\n]*$/g,"");
+			//Non-Html Format
+			text = text.replace(/[\<]/g,"&lt;");
+			text = text.replace(/[\>]/g,"&gt;");
+			//Format
+			text = text.replace(/[\r\n]/g,"<br>");
+			
+			return text;
+		}
+		function SetColor(obj){
+			var color = $(obj).css("backgroundColor");
+			$(".color_block").removeClass("active");
+			$(obj).addClass("active");
+			user_color = color;
+		}
+		
+		//===========================
+		
+	</script>
+	<style>
+		div {
+			border-radius: 10px;
+		}
+		tab {
+			margin-left: 20px;
+		}
+		#chat_log {
+			display: inline-block;
+
+			width: 660px;
+			height:340px;
+			padding:5px;
+			margin:10px 0px 10px 0px;
+
+			border: 10px #AAAAFF solid;
+			background: #DDDDFF;
+			text-align: left;
+
+			overflow-y:auto;
+		}
+		#chat_announce {
+			display: inline-block;
+
+			width: 300px;
+			height:340px;
+			padding:5px;
+			margin:10px 0px 10px 0px;
+
+			border: 10px #3F3F58 solid;
+			background: #3B3B45;
+			color: #fff;
+			text-align: left;
+
+			overflow:auto;
+		}
+		#chat_panel {
+			display: inline-block;
+
+			width: 960px;
+			padding:5px;
+
+			border: 10px #C8D7E7 solid;
+			background: #ACC2CF;
+			text-align: left;
+
+			overflow:auto;
+		}
+
+		.color_block {
+			display: inline-block;
+			width:12px;
+			height:12px;
+		}
+		.color_block:hover {
+			border: 1px white solid;
+		}
+		.color_block.active {
+			border: 2px white solid;
+		}
+		.color_block.red {		background: #b7180a;}
+		.color_block.blue {		background: #3019e1;}
+		.color_block.green {	background: #0f9a03;}
+		.color_block.purple {	background: #952381;}
+		.color_block.yellow {	background: #BAB822;}
+	</style>
+</head>
+<body>
+	<center>
+	<!--標題-->
+	<h3><strong>請問骰神</strong></h3>
+	
+	<div id='chat_log'></div>
+
+	<div id='chat_announce'>
+		<strong style='font-size:16px;'>骰神問卦須知</strong>
+		<hr/>
+		-「問」問題，讓偉大的骰神回答你的問題。<br/>
+		-「說」出你的話，盡你所能的取悅骰神吧。
+		<hr/>
+		
+		<b style='color:red;'>注意！</b>
+		向骰神問卦之前，需記住四點原則：<br/>
+		<tab>一、骰神只會回答「是」或「不是」<br/>
+		<tab>二、不能向骰神重複詢問相同的問題<br/>
+		<tab>三、骰神喜歡騙人<br/>
+		<tab>四、不可質疑你的骰神
+	</div>
+	<br/>
+	
+	<div id="chat_panel">
+		文字顏色: 
+			<div class='color_block red active' onClick='SetColor(this);'></div>
+			<div class='color_block blue' onClick='SetColor(this);'></div>
+			<div class='color_block green' onClick='SetColor(this);'></div>
+			<div class='color_block purple' onClick='SetColor(this);'></div>
+			<div class='color_block yellow' onClick='SetColor(this);'></div>
+
+		<div>
+			<input id='user' type='text' style='width:100px;' placeholder="(帳號名)" value="無名氏"/> 
+			<select id='method' size='1' width=20px>
+				<option value=0>說</option>
+				<option value=1 selected>問</option>
+			</select>
+			<input id='msg_box' type='text' style='width:700px;'/>
+			<button class="btn btn-default" onClick="Chat();">送出</button>
+		</div>
+	</div>
+	<br/>
+	
+			
+			
+			
+	<button class="btn btn-default" onClick="Download();">下載對話紀錄</button>
+	
+	
+	
+	
+	
+	<hr>
+	Author:Hazmole 	Version:1.10
+	</center>
+</body>
+</html>

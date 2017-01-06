@@ -1,0 +1,19 @@
+#index#
+[time]2015.04.06 ~2015.10.07
+[intro][/intro]
+
+[table=使用系統][/table]
+[table=跑團工具][/table]
+[table=GM][/table]
+[table=劇本長度][/table]
+[table=劇本風格][/table]
+[table=背景設定][/table]
+[table=招收人數][/table]
+[table=團員][/table]
+[table=外部連結][/table]
+[table=其他資訊][/table]
+
+
+[extra=房規、場景表（點擊展開／收起）]
+
+[/extra]

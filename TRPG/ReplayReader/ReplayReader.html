@@ -1,0 +1,224 @@
+<html>
+<head>
+	<title>哈絲默爾的跑團紀錄</title>
+	<meta name="Author" content="Hazmole">
+	<meta http-equiv="Content-Type"		content="text/html" charset="UTF-8">
+	<meta http-equiv="Content-Language" content="zh-TW">
+	<link rel="shortcut icon" 				href="../../_img/hz_icon.ico">
+	<!--Jquery-->
+	<script src="../../_jquery/jquery-1.11.3.min.js"></script>
+	<!--Bootstrap-->
+	<script src="../../_bootstrap/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="../../_bootstrap/css/bootstrap.min.css">
+	<!--NavBar-->
+	<script src="../../_js/CreateNavBar.js"></script>
+	
+	<!--Custom-->
+	<script src="ReplayIndex.js"></script>
+	<script src="ReplayReader.js"></script>
+	<script>
+		var reader = new Reader("#bottom");
+		
+		$(document).ready(function(){
+			setPage();
+			
+		});
+		window.onhashchange = function() {
+ 			setPage();
+		}
+
+		function setPage(){
+			$("#content").html("<tag id=\"bottom\">");
+
+			var hash = (location.hash);
+			hash = hash.match(/#([^\d]*)(\d*)/);
+
+			var isFile = ((hash!=null)&&(ReplayIndex[hash[1]]!=null));
+			if(!isFile){
+				// no file
+				$("#title").text("無標題");
+				$("#menu").text("無索引");
+			}
+			else{
+				// target file
+				var Set = ReplayIndex[hash[1]];
+				var idx = parseInt((hash[2])? hash[2]: 0);
+				
+				$("#title").text(Set.TITLE+"："+Set.Docs[idx].title);
+				$("#menu").html(renderMenu(hash, Set));
+
+				var url = "docs/"+ Set.ROUTE + Set.Docs[idx].url;
+
+				reader.readFile(url, Set);
+				
+				if(Set.Docs.length>idx+1)
+					$("#bottom").after(renderChangePageLink( ("#"+hash[1]+(idx+1)), "<span id=\"next\" class=\"block pageGuild\">下一頁</span>"));
+				if(idx>0)
+					$("#bottom").after(renderChangePageLink( ("#"+hash[1]+(idx-1)), "<span id=\"prev\" class=\"block pageGuild\">上一頁</span>"));
+			}
+		}
+
+		function renderMenu(hash, setting){
+			var childs = $.map(setting.Docs, function(obj, idx){
+				var div = "<div class=\"menuLinkBlock\">"+obj.title+"</div>";
+				var url = ("#"+hash[1]+idx);
+				if(hash[2]!=idx) div = renderChangePageLink(url, div);
+				return div;
+			});
+
+			return childs;
+		}
+		function renderChangePageLink(url, content){
+			return "<a href=\""+url+"\">"+content+"</a>";
+		}
+	</script>
+
+	<style type="text/css">
+		div {
+			padding: 0px;
+			margin:  0px;
+		}
+		s {
+			text-decoration: line-through;
+		}
+		.bodyBack {
+			background: -webkit-linear-gradient(#392946, #392946, black); 	/* For Safari 5.1 to 6.0 */
+		    background: -o-linear-gradient(		#392946, #392946, black); 	/* For Opera 11.1 to 12.0 */
+		    background: -moz-linear-gradient(	#392946, #392946, black); 	/* For Firefox 3.6 to 15 */
+		    background: linear-gradient(		#392946, #392946, black); 	/* Standard syntax (must be last) */
+		    background-attachment: fixed; 
+		    color: white;
+		}
+		
+		.opcDiv {
+			background: rgb(150, 150, 155) ;
+   			background: rgba(150, 150, 155, .5);
+			border-radius: 10px;
+			margin: 10px;
+		}
+		.block {
+			background: #E9E9E9;
+			border: 5px solid #a0a0a0;
+			border-radius: 10px;
+			color: black;
+		}
+		.replayTable {
+			width: 100%;
+			color: black;
+
+		}
+		.replayTable td {
+			padding-top: 	2px;
+			padding-bottom: 3px;
+			vertical-align: top;
+		}
+		.replayUserTd {
+			width: 150px;
+			text-align: right;
+			font-weight: bold;
+		}
+		.replayContTd {
+			text-align: left;
+		    line-height: 1.4;
+		}
+		#menu {
+			display: inline-block;
+			vertical-align: top;
+
+			width: 300px;
+		}
+		.menuLinkBlock {
+			width: 90%;
+			margin:5px;
+			padding:5px 5px 5px 10px;
+			background: #E3DDF1;
+			border-radius: 10px;
+
+			text-align: left;
+			color: black;
+			font-size: 16px;
+			font-weight: bold;
+		}
+		a .menuLinkBlock{
+			color: #483D8B;
+		}
+
+		#main {
+			display: inline-block;
+			vertical-align: top;
+			width: 1000px;
+			text-align: left;
+		}
+
+		.content {
+			width: 90%;
+			padding: 10px;
+			margin: 10px;
+		}
+		.subTitle {
+			display: inline-block;
+			padding: 10px;
+			margin: 10px 10px 0px 5px;
+			border:0px;
+			font-size: 16px;
+			font-weight: bold;
+		}
+		.innerBlock {
+			//display: inline-block;
+			width: 80%;
+			padding: 10px;
+			margin: 0px 10px 10px 5px;
+			border:0px;
+			text-align: left;
+		}
+		.innerTitle {
+			width: 85%;
+			padding: 5px;
+			background: #ccdce6;
+			border:0px;
+			font-weight: bold;
+		}
+
+		#title {
+			width: 90%;
+			
+			padding: 5px;
+			margin: 10px;
+			margin-bottom: 20px;
+
+			border: 5px solid #6C6C6C;
+			font-size: 20px;
+			font-weight: bold;
+		}
+
+		.pageGuild {
+			padding:5px 20px 5px 20px;
+			margin: 10px;
+
+			background:#B4C0D2;
+
+			border: 0px;
+		}
+		#next {
+			//float: right;
+		}
+	</style> 
+</head>
+<body class="bodyBack">
+
+	<center>
+		
+		<div id="menu" class="opcDiv"></div>
+		<div id="main">
+			<div id="title" class="block">無標題</div>
+			<div id="content">
+				<tag id="bottom">
+			</div>
+		</div>
+
+		<br/>
+		<hr>
+		Author:Hazmole 	Version:0.80
+	</center>
+</body>
+</html>

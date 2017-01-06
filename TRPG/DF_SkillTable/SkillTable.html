@@ -1,0 +1,294 @@
+﻿<html>
+<head>
+	<title>DF：自動難度計算表</title>
+	<meta name="Author" content="Hazmole">
+	<meta http-equiv="Content-Type"		content="text/html" charset="UTF-8">
+	<meta http-equiv="Content-Language" content="zh-TW">
+	<link rel="shortcut icon" 				href="../../_img/hz_icon.ico">
+	<!--Jquery-->
+	<script src="./jquery-1.11.3.min.js"></script>
+	<!--Bootstrap-->
+	<script src="./bootstrap.min.js"></script>
+	<link rel="stylesheet" href="./bootstrap.min.css">
+	<!--NavBar
+	<script src="../../_js/CreateNavBar.js"></script>-->
+	
+	
+	<script language="javascript" src="js/DF_SkillListCounter.js"></script>
+	<script language="javascript" src="js/DF_SkillListName.js"></script>
+	<script language="javascript">
+		var Select_point = [];
+		var Select_field = [0,0,0,0,0,0];
+		var Name = SkillName;
+		var Map  = SkillCounter.getDifficultyMap();
+		var System = 1;
+		var F = -1;
+		var color_default = 0;
+		var color_arr=[];
+			color_arr[0] = ["ff0000","ffcc00","ffff00","ceffb5","e8fdff","99ccff","0281ff","cecfff","ffffff"];
+			color_arr[1] = ["7b0c24","c8143b","e92650","ee5475","f2829b","fcdfe5","ffffff"];
+			color_arr[2] = ["111f7d","243de1","5f72e9","7b7dec","a7a9f3","c8cef8","ffffff"];
+			color_arr[3] = ["216421","37a337","4bc24b","71cf71","97dc97","e3f6e3","ffffff"];
+		
+		
+		
+		// Initial
+		$("body").ready(initialize);
+		function initialize(){
+			Select_point = [];
+			Select_field = [0,0,0,0,0,0];
+			Name.getMagicaLogiaArray();
+			SkillCounter.enableHorizon = false;
+			SkillCounter.enableVertical = false;
+			renderTable();
+			redrawTable();
+		}
+		function clearTable(){
+			Select_point = [];
+			Select_field = [0,0,0,0,0,0];
+			F = -1;
+			$("#enable_hor").prop("checked", false);
+			$("#enable_ver").prop("checked", false);
+			SkillCounter.enableHorizon = false;
+			SkillCounter.enableVertical = false;
+			redrawTable();
+		}
+
+		// Render
+		function renderTable(){
+			var render = "";
+			var head = "";
+			var body = "";
+			var tail = "";
+			// render field
+			for(var i=0;i<6;i++){
+				head += "<td id='F_"+i+"' width=10px rowspan=14 onClick='singleSetField("+i+")'> </td>";
+				head += "<td><button id='FB_"+i+"' class='myButton' onClick='setField("+i+")'></button></td>";
+			}
+			head = "<tr><td width='42px'></td>"+head+"</tr>";
+			// render skill 
+			for(var j=0;j<11;j++){
+				body += "<tr><th>"+(j+2)+"</th>";
+				for(var i=0;i<6;i++)
+					body += "<td id='S_"+i+"_"+j+"' class='skill' onclick=changePoint("+i+","+j+")>"+renderSkill()+"</td>";
+				body += "</tr>";
+			}
+			// render avg
+			tail += "<tr><th>平均</th>";	for(var i=0;i<6;i++)	tail += "<td id='NA_"+i+"'></td>";	tail += "</tr>";
+			tail += "<tr><th>加權</th>";	for(var i=0;i<6;i++)	tail += "<td id='AA_"+i+"'></td>";	tail += "</tr>";
+			render = "<table border=2 class=\"skillTable\"><tbody>"+head+body+tail+"</tbody></table>";
+			$("#table").html(render);
+		}
+		function renderSkill(){
+			return "<div class='skill_name'>name</div><div class='skill_diff'>difficulty</div>";
+		}
+		function redrawTable(){
+			Map  = SkillCounter.getDifficultyMap(Select_point, Select_field);
+
+			for(var i=0;i<6;i++){
+				$("#FB_"+i).html(Name.arr[i][0]);
+				$("#F_"+i).css("background", (Select_field[i])? "#000": "#fff");
+
+				for(var j=0;j<11;j++){
+					var td = $("#S_"+i+"_"+j);
+					td.css("background", "#"+getDifficultColor(Map[i][j]));
+					td.children(".skill_name").text(Name.arr[i][j+1]);
+					td.children(".skill_diff").text("("+(Map[i][j]? Map[i][j]: "-")+")");
+				}
+				var NA = getNormalAvg(i);
+				$("#NA_"+i).css("background", "#"+getDifficultColor(NA)).text((NA)?NA:"--");
+				var AA = getWeightAverage(i);
+				$("#AA_"+i).css("background", "#"+getDifficultColor(AA)).text((AA)?AA:"--");
+			}
+			
+
+		}
+
+		// Control
+		function changeSystem(id){
+			System = id;
+			switch(id){
+				case 1: Name.getMagicaLogiaArray(); break;
+				case 2: Name.getShonobiGamiArray(); break;
+				case 3: Name.getInsaneArray(); break;
+				case 4: Name.getBloodCrusadeArray(); break;
+				case 5: Name.getKanColleArray(); break;
+				case 6: Name.getCardRankerArray(); break;
+			}
+			setField(F);
+			redrawTable();
+		}
+		function searchPoint(f,c){
+			for(var i=0;i<Select_point.length;i++)
+				if(Select_point[i].f==f && Select_point[i].c==c) return i;
+			return -1;
+		}
+		function changePoint(f,c){
+			var index = searchPoint(f,c);
+			if(index==-1)	Select_point.push(new SkillPosition(f, c));
+			else			Select_point.splice(index,1);
+			redrawTable();
+		}
+		function setField(f){
+			if(f==-1) return ;
+			F = f;
+			Select_field = [0,0,0,0,0,0];
+			Select_field[f] = 1;
+			if(System!=2 || f!=5) Select_field[(f==5)? 0: f+1] = 1;
+			redrawTable();
+		}
+		function singleSetField(f){
+			Select_field[f] = (Select_field[f])? 0: 1;
+			redrawTable();
+		}
+		function setSpan(id){
+			switch(id){
+				case 1: SkillCounter.enableHorizon  = (SkillCounter.enableHorizon )? false:true; break;
+				case 2: SkillCounter.enableVertical = (SkillCounter.enableVertical)? false:true; break;
+			}
+			redrawTable();
+		}
+
+		
+		// Color Support
+		function getDifficultColor(diff){
+			if(diff==null) return "ffffff";
+			var c     = color_arr[color_default];
+			var c_len = color_arr[color_default].length;
+			var index = (diff-5 > c_len-1)? (c_len-1): Math.floor(diff-5);
+			//console.log(c[index]+"  "+index+" "+c_len);
+			return c[index];
+		}
+		function setColor(obj, c_id){
+			$(".color_block").removeClass("active");
+			$(obj).addClass("active");
+			color_default = c_id;
+			redrawTable();
+		}
+
+		// Average Support
+		function getNormalAvg(f){
+			if(Map[f][0]==null) return null;
+			for(var i=0,sum=0;i<11;i++)	sum += Map[f][i];
+			return (sum/11).toFixed(2);
+		}
+		function getWeightAverage(f){
+			if(Map[f][0]==null) return null;
+			for(var i=0,sum=0;i<11;i++)	sum += Map[f][i]*prob(i);
+			return (sum/36).toFixed(2);
+		}
+		function prob(c){
+			return (c<=5)? c+1: 11-c;
+		}
+	</script>
+	<style type="text/css">
+		.myButton { 
+			width: 90%;
+			padding: 10px 5px 10px 5px;
+		} 
+		.skillTable {
+		}
+		.skillTable th {
+			text-align:center;
+			width: 20px;
+			background:#cccccc;
+		}
+		.skillTable td {
+			text-align:center;
+			transition: background 0.6s; 
+			-webkit-transition: background 0.6s; 	/* Safari 和 Chrome */
+			-moz-transition: background 0.6s; 	/* Firefox 4 */
+			-o-transition: background 0.6s; 		/* Opera */
+		}
+		.skill { 
+			padding: 3px;
+			width: 80px;
+			height:45px; 
+			font-size: 14px;
+		} 
+
+		#table {
+			display: inline-block;
+			height:580px;
+
+			vertical-align: top;
+		}
+		#panel {
+			display: inline-block;
+			width: 200px;
+			height:520px;
+
+			padding:5px;
+			border: 10px #C8D7E7 solid;
+			background: #ACC2CF;
+
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.themeButton {
+			width:80%;
+			margin: 0px 20px 0px 20px;
+		}
+		.clearButton {
+			width:80%;
+			margin: 0px 20px 0px 20px;
+			font-size: 20px;
+		}
+
+		.color_block {
+			display: inline-block;
+			
+			border-radius: 5px;
+			width:15px;
+			height:15px;
+		}
+		.color_block:hover {
+			border: 1px white solid;
+		}
+		.color_block.active {
+			border: 2px white solid;
+		}
+		.color_block.white {	background: gray;}
+		.color_block.red {		background: #b7180a;}
+		.color_block.blue {		background: #3019e1;}
+		.color_block.green {	background: #0f9a03;}
+		
+	</style> 
+</head>
+<body class="bodyBack">
+
+	<center>
+		<h3>DiceFiction：自動難度計算表</h3>
+		<div id="block" class="OpcaBoard">
+			<div id="table"></div>
+			<div id="panel">
+				<center>
+					<div class='color_block white active' onClick='setColor(this, 0);'></div>
+					<div class='color_block red' onClick='setColor(this, 1);'></div>
+					<div class='color_block blue' onClick='setColor(this, 2);'></div>
+					<div class='color_block green' onClick='setColor(this, 3);'></div>
+				</center>
+				<br/>
+				<button class="clearButton btn btn-default" onClick="clearTable();">初始化</button><br/>
+				
+				<hr/>
+				<strong>系統：</strong><br/>
+				<button class="themeButton btn btn-default" onClick="changeSystem(1)">魔道書大戰</button><br/>
+				<button class="themeButton btn btn-default" onClick="changeSystem(2)">忍神</button><br/>
+				<button class="themeButton btn btn-default" onClick="changeSystem(3)">Insane</button>
+				<button class="themeButton btn btn-default" onClick="changeSystem(4)">吸血鬼獵人</button>
+				<button class="themeButton btn btn-default" onClick="changeSystem(5)">艦隊收集</button>
+				<button class="themeButton btn btn-default" onClick="changeSystem(6)">Card Ranker</button>
+				<hr/>
+				<input type="checkbox" id="enable_hor" onChange="setSpan(1);"><label for="enable_hor">允許左右貫通</label><br/>
+				<input type="checkbox" id="enable_ver" onChange="setSpan(2);"><label for="enable_ver">允許上下貫通</label>
+			</div>
+		</div>
+		<div class="BoardBlock"></div>
+
+		<hr>
+		Author:Hazmole 	Version:2.00
+	</center>
+</body>
+</html>
