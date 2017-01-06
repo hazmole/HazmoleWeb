@@ -11,10 +11,10 @@ var NAVBAR_SETTING = {
 			//new Navbar_obj("As Insecta Singing", "/TRPG/")
 			]),
 		new Navbar_obj("TRPG團錄",	[
-/*
+
 			new Navbar_obj("[魔道書]魔偶之館", "/TRPG/ReplayReader/ReplayReader.html#Magica-DH0"),
 			new Navbar_obj("[忍神]鐵鼠之檻", "/TRPG/ReplayReader/ReplayReader.html#Shinobi-TN0"),
-			//new Navbar_obj("[COC]", "/TRPG/"),
+/*			//new Navbar_obj("[COC]", "/TRPG/"),
 			//new Navbar_obj("[DND]", "/TRPG/"),
 */
 			]),
