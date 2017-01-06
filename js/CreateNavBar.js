@@ -24,12 +24,14 @@ var NAVBAR_SETTING = {
 			new Navbar_obj("請問骰神", "/TRPG/AskDicedess.html"),
 		]),
 		new Navbar_obj("小遊戲",	[
-/*
-			new Navbar_obj("虹色狂走", "/Game/RunForPower/RunForPower.html"),
-			new Navbar_obj("打蒼蠅", "Game/SmashFly/SmashFly.html"),
-			new Navbar_obj("米卡追蹤(仿)", "Game/MikaTrace/MikaTrace.html"),
-			//new Navbar_obj("連連看", "/Game"),
+
+/*			new Navbar_obj("虹色狂走", "/Game/RunForPower/RunForPower.html"),
 */
+			new Navbar_obj("打蒼蠅", "Game/SmashFly/SmashFly.html"),
+/*			new Navbar_obj("米卡追蹤(仿)", "Game/MikaTrace/MikaTrace.html"),
+*/
+			new Navbar_obj("連連看", "Game/LinkingGame/LinkingGame.html"),
+
 		]),
 		new Navbar_obj("其他",	[
 			new Navbar_obj("無題《開車》", "Other/haz_driving.html", "target='_blank'"),

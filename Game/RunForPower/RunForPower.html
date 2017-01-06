@@ -1,0 +1,65 @@
+﻿<html>
+<head>
+	<title>虹色狂走</title>
+	<meta name="Author" content="Hazmole">
+	<meta http-equiv="Content-Type" content="text/html" ;="" charset="UTF-8">
+	<meta http-equiv="Content-Language" content="zh-TW">
+	
+	<!--Jquery-->
+	<script src="../../_jquery/jquery-1.11.3.min.js"></script>
+	<!--Bootstrap-->
+	<script src="../../_bootstrap/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="../../_bootstrap/css/bootstrap.min.css">
+	<!--NavBar-->
+	<script src="../../_js/CreateNavBar.js"></script>
+
+	<!--Custom-->
+	<script src="RFP.js"></script>
+	<script src="RFP_Battle.js"></script>
+	<script src="RFP_Scene.js"></script>
+	<script src="RFP_Character.js"></script>
+	<script src="RFP_Builder.js"></script>
+	<script>
+		var Main_Controller;
+		
+		function startGame(){
+			Main_Controller = new Main("main_block");
+			Main_Controller.start();
+		}
+	</script>
+	<link rel=stylesheet type="text/css" href="RunForPower.css">
+	<style>
+		.strict {	position: absolute;	}
+		body{
+			font-family:微軟正黑體,細明體,新細明體
+		}
+		div {
+			border-radius: 5px;
+		}
+		#main_block {
+			width:780px;
+			height:570px;
+			left: 50%;
+			margin-left: -390px;
+
+			border: 10px #cccccc solid;
+			background:#dedede;
+			text-align:left;
+
+			overflow:hidden;
+		}
+	</style>
+</head>
+<body onload="startGame();">
+	<center>
+	<!--標題-->
+	<h3><strong>虹色狂走</strong></h3>
+
+	<!--主遊戲區塊-->
+	<div id="main_block" class="strict"></div>
+	<div style="height:570px;"></div><!--填空區塊-->
+	<hr>
+	Author: Hazmole 	Version:0.96 <br>
+	</center>
+</body>
+</html>

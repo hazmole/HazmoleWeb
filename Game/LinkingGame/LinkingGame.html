@@ -1,0 +1,62 @@
+﻿<html>
+<head>
+	<title>連連看</title>
+	<meta name="Author" content="Hazmole">
+	<meta http-equiv="Content-Type" content="text/html" ;="" charset="UTF-8">
+	<meta http-equiv="Content-Language" content="zh-TW">
+	<link rel=stylesheet type="text/css" href="LinkingGame.css">
+
+	<!--Jquery-->
+	<script src="../../jquery/jquery-1.11.3.min.js"></script>
+	<!--Bootstrap-->
+	<script src="../../bootstrap/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+	<!--NavBar-->
+	<script src="../../js/CreateNavBar.js"></script>
+
+	<script src="LinkingGame.js"></script>
+	
+</head>
+<body onload="restartGame();">
+	<center>
+	<h3>連連看</h3>
+	<hr>
+	
+	<!--主遊戲區塊-->
+	<div id="main_block" style="width:650px; height:450px; background:#cccccc;" >
+	
+	</div>
+	<div id="sound"></div>
+	
+	
+	<p>
+	
+	<!--按鈕-->
+	<div id="main_panel">
+		<table style="background:#828c5e;border:10px solid #828c5e;">
+		<tr>
+			<th>
+				<b id="W">10</b>列：
+					<input type="range" id="in_W" min="4" max="16" step="2" value="10" onchange="resize();" style="width:80px;"><br>
+				<b id="H">7</b>行：
+					<input type="range" id="in_H" min="4" max="10" step="1" value="7" onchange="resize();" style="width:80px;"><br>
+			</th>
+			<th>
+				<input type="button" value="新遊戲" onclick="restartGame();" style="width:60px; height:40px;">
+				<br>
+				<input type="button" value="更新"   onclick="setValue(document.getElementById('main_block'));" style="width:60px; height:40px;">
+			</th>
+		</table>
+	</div>
+	<div onclick="MODE=(MODE==0)?1:0;" style="width:10px;height:10px;background:red;"></div>
+	
+	
+	<div id="out"></div>
+	
+	<hr>
+	Author: Hazmole 	Version:1.00 <br>
+	Picture from: <a href=http://worldreformationblog.blog45.fc2.com/blog-entry-208.html>HERE</a>　　
+	Voice from: <a href=http://www51.atpages.jp/kancollev/kcplayer.php>HERE</a>
+	</center>
+</body>
+</html>

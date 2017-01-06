@@ -1,0 +1,63 @@
+﻿<html>
+<head>
+	<title>米卡追蹤</title>
+	<meta name="Author" content="Hazmole">
+	<meta http-equiv="Content-Type" content="text/html" ;="" charset="UTF-8">
+	<meta http-equiv="Content-Language" content="zh-TW">
+	<link rel=stylesheet type="text/css" href="HzCommonStyle.css">
+	<link rel=stylesheet type="text/css" href="MikaTrace.css">
+	<script src="MikaTrace.js"></script>
+	<!--Jquery-->
+	<script src="../../jquery/jquery-1.11.3.min.js"></script>
+	<!--Bootstrap-->
+	<script src="../../bootstrap/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+	<!--NavBar-->
+	<script src="../../js/CreateNavBar.js"></script>
+
+	<style>
+.strict {position: absolute;}
+	</style>
+</head>
+<body onload="Initialize()">
+	<center>
+	<h3>米卡追蹤</h3>
+	<hr>
+	
+	<!--主遊戲區塊-->
+	<div id="main" class="strict" style="width:1000px; height:480px; left:180px; margin-left:0px; background:#208cff;">
+		<div id="head"  class="block body head"  style="display:none;"></div>
+		<div id="prize" class="block prize" style="display:none;">P</div>
+	</div>
+	<div id="main_panel" class="strict" style="left:80px;width:100px;">
+		<table style="background:black;color:white;width:100%;">
+		<tr>
+			<th><center>分數</center></th>
+		</tr>
+		<tr>
+			<th><center><div id="score">0</div></center></th>
+		</tr>
+		<tr>
+			<th><center><input id="btn" type="button" value="開始遊戲" onclick="startGame();" style="width:80px; height:40px; color:black;"></center></th>
+		</tr>
+		</table>
+	</div>
+
+
+	<div style="height:480px;"></div>	<!--填空區塊-->
+	
+
+	<hr>
+	
+	<p>
+	
+	<!--按鈕-->
+	
+	
+	<div id="out"></div>
+	<div id="sound"></div>
+	<hr>
+	Author: Hazmole 	Version:1.00 <br>
+	</center>
+</body>
+</html>

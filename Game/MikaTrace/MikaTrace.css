@@ -1,0 +1,32 @@
+﻿#score{
+	font-size: 48px;
+}
+
+
+.block {
+	position: absolute;
+
+	width:16px;
+	height:16px;
+	margin-left: -8px;
+	margin-top:  -8px;
+	font-size:8px;
+}
+
+.body {
+	background: black;
+	border-radius: 8px;
+}
+.prize {
+	background: yellow;
+	border-radius: 16px;
+}
+.obstacle{
+	color: white;
+	background: red;
+	border-radius: 16px;
+}
+
+.head {
+	background: white;
+}

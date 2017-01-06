@@ -1,0 +1,21 @@
+﻿table{
+	border:0px;
+}
+td {
+	vertical-align:top;
+	//padding: 3 2 2 3;
+}
+th { 
+	font-weight: bold;
+	text-align:center;
+}
+div {
+	padding: 3 2 2 3;
+	overflow: hidden;
+}
+
+
+.strict {
+	position: absolute;
+	
+}

@@ -1,0 +1,181 @@
+﻿<html>
+<head>
+	<title>打蒼蠅</title>
+	<meta name="Author" content="Hazmole">
+	<meta http-equiv="Content-Type" content="text/html" ;="" charset="UTF-8">
+	<meta http-equiv="Content-Language" content="zh-TW">
+	<link rel="shortcut icon" href="../../img/hz_icon.ico">
+	
+	<!--Jquery-->
+	<script src="../../jquery/jquery-1.11.3.min.js"></script>
+	<!--Bootstrap-->
+	<script src="../../bootstrap/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+	<!--NavBar-->
+	<script src="../../js/CreateNavBar.js"></script>
+
+	<!--Custom-->
+	<script>
+		var POSITION = {x:100, y:100};
+		var BOUNDRY  = {w:300, h:300};
+		var PERIOD= 50;
+
+		var TIMER = 0;
+		var GAME_STATUS = 0;
+
+		var INTERVAL = null;
+		/*=====================
+			Interact Function
+		=====================*/
+		function startGame(){
+			if(GAME_STATUS) return;
+			$("#button_start").prop("disabled", true);
+
+			var main_block = document.getElementById("main_block");
+			var fly = document.getElementById("fly");
+
+			//alert(fly);
+
+			// Set Boundry
+			BOUNDRY.w = Math.floor($(main_block).width() );
+			BOUNDRY.h = Math.floor($(main_block).height());
+
+			fly.style.background = "";
+			setFlyFeat(fly);
+			
+			switchDisplay(fly, "block");
+			
+			GAME_STATUS = 1;
+			TIMER = 0;
+			
+			INTERVAL = setInterval(flyMove, PERIOD);
+		}
+
+		function hit(){
+			if(!GAME_STATUS) return;
+			clearInterval(INTERVAL);
+			$("#button_start").prop("disabled", false);
+
+			document.getElementById("fly").style.background = "url(pic/blood.png)";
+			GAME_STATUS = 0;
+		}
+
+		
+		/*=====================*/
+		function printScore(){
+			document.getElementById("out").innerHTML = "<strong style='font-size:20px;'>" + (TIMER*0.001*PERIOD).toFixed(2) + "</strong>秒";
+		}
+		/*=====================
+			Time Function
+		=====================*/
+		function flyMove(){
+			if(!GAME_STATUS) return;
+			var fly = document.getElementById("fly");
+			
+			var x_move = (randInt(12)-6)*5;
+			var y_move = (randInt(8)-4)*5;
+			
+			var x = POSITION.x + x_move;
+			var y = POSITION.y + y_move;
+			x = (x<0)? 0: ((x>BOUNDRY.w)? BOUNDRY.w: x);
+			y = (y<0)? 0: ((y>BOUNDRY.h)? BOUNDRY.h: y);
+			
+			setFlyFeat(fly, x, y);
+			
+			TIMER +=1;
+		    printScore();
+		}
+
+
+		/*=====================
+			Initialize Function
+		=====================*/
+		
+		function setFlyFeat(obj, x, y){
+			x = (x)? x: randInt(BOUNDRY.w);
+			y = (y)? y: randInt(BOUNDRY.h);
+			obj.style.left = x+"px";
+			obj.style.top  = y+"px";
+			POSITION.x = x;
+			POSITION.y = y;
+		}
+
+
+		/*=====================
+			Support Define
+		=====================*/
+		function switchDisplay(obj, force){
+			if(typeof force == 'undefined')
+		        obj.style.display = (obj.style.display=="block")? "none": "block";
+			else
+				obj.style.display = force;
+		}
+
+		function randInt(num){
+			return Math.floor(Math.random()*(num+1));
+		}
+	</script>
+	<style>
+		div {
+			border-radius: 5px;
+		}
+		#main_block {
+			position: absolute;
+
+			width:780px;
+			height:460px;
+			left: 50%;
+			margin-left: -390px;
+
+			border: 10px #cccccc solid;
+			background:#dedede;
+			text-align:left;
+
+		}
+		#button_start {
+			width: 200px;
+			height:40px;
+			font-size: 20px;
+			margin: 10px;
+		}
+		#fly {
+			position:absolute;
+			width: 30px;
+			height:30px;
+			margin-left:-15px;
+			margin-top: -15px;
+
+			transition: 		left 0.05s, top 0.05s;
+			-moz-transition:	left 0.05s, top 0.05s; /* Firefox 4 */
+			-webkit-transition:	left 0.05s, top 0.05s; /* Safari 和 Chrome */
+			-o-transition:		left 0.05s, top 0.05s; /* Opera */
+		}
+		#out {
+			border: 5px #cccccc solid;
+			width: 100px;
+			height:40px;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<center>
+	<!--標題-->
+	<h3><strong>打蒼蠅</strong></h3>
+	
+	<!--主遊戲區塊-->
+	<div id="main_block">
+		<img id="fly" src="pic/fly.png" style="display:none;" onclick="hit();">
+	</div>
+	<div style="height:460px;"></div>	<!--填空區塊-->
+	
+	<button id="button_start" class="btn btn-default" onClick="startGame();">開始遊戲</button>
+	
+	
+	<div id="out">--</div>
+
+	<hr>
+	Author: Hazmole 	Version:1.00 <br>
+	</center>
+</body>
+</html>

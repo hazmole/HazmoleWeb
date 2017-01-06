@@ -1,0 +1,29 @@
+﻿table{
+	border:0px;
+}
+td {
+	vertical-align:top;
+	//padding: 3 2 2 3;
+}
+th { 
+	font-weight: bold;
+	text-align:center;
+}
+
+#main_block{
+	padding: 3 2 2 3;
+	overflow: hidden;
+}
+
+
+.strict {
+	position: absolute;
+	
+}
+.block {
+	width:50px;
+	height:50px;
+	
+	text-align:center;
+}
+
