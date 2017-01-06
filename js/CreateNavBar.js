@@ -11,9 +11,8 @@ var NAVBAR_SETTING = {
 			//new Navbar_obj("As Insecta Singing", "/TRPG/")
 			]),
 		new Navbar_obj("TRPG團錄",	[
-
-			new Navbar_obj("[魔道書]魔偶之館", "/TRPG/ReplayReader/ReplayReader.html#Magica-DH0"),
-			new Navbar_obj("[忍神]鐵鼠之檻", "/TRPG/ReplayReader/ReplayReader.html#Shinobi-TN0"),
+			new Navbar_obj("[魔道書]魔偶之館", "TRPG/ReplayReader/ReplayReader.html#Magica-DH0"),
+			new Navbar_obj("[忍神]鐵鼠之檻", "TRPG/ReplayReader/ReplayReader.html#Shinobi-TN0"),
 /*			//new Navbar_obj("[COC]", "/TRPG/"),
 			//new Navbar_obj("[DND]", "/TRPG/"),
 */
@@ -21,10 +20,10 @@ var NAVBAR_SETTING = {
 		new Navbar_obj("TRPG工具",	[
 			new Navbar_obj("DF技能跳格表", "TRPG/DF_SkillTable/SkillTable.html"),
 			//new Navbar_obj("團錄上色器", "/TRPG/"),
-			new Navbar_obj("請問骰神", "/TRPG/AskDicedess.html"),
+			new Navbar_obj("請問骰神", "TRPG/AskDicedess.html"),
 		]),
 		new Navbar_obj("小遊戲",	[
-			new Navbar_obj("虹色狂走", "/Game/RunForPower/RunForPower.html"),
+			new Navbar_obj("虹色狂走", "Game/RunForPower/RunForPower.html"),
 			new Navbar_obj("打蒼蠅", "Game/SmashFly/SmashFly.html"),
 			new Navbar_obj("米卡追蹤(仿)", "Game/MikaTrace/MikaTrace.html"),
 			new Navbar_obj("連連看", "Game/LinkingGame/LinkingGame.html"),
