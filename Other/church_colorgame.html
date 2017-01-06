@@ -1,0 +1,149 @@
+﻿<html>
+<head>
+	<title>快問快答</title>
+	<meta name="Author" content="Hazmole">
+	<meta http-equiv="Content-Type" content="text/html" ;="" charset="UTF-8">
+	<meta http-equiv="Content-Language" content="zh-TW">
+	<link rel="shortcut icon" href="favicon.ico">
+	<script>
+		var q_pad, t_pad, time_setter, btn;
+
+		var color_array = ["red", "blue", "yellow", "green", "black", "purple"];//, "#755b48"];
+		var text_array = ["紅","黃","藍","綠","紫","黑","白"];//,"棕"];
+
+		var game_state = 0;
+		var loop_time = 3000;
+		var timer = 0;
+		var ques_counter = 0;
+	
+		var INTERVAL = null;
+		var PERIOD= 20;
+		var MAX_QUES = 20;
+		var COLOR_TARGET = 0;
+
+		function initialize(){
+			q_pad = document.getElementById("question_pad");
+			t_pad = document.getElementById("countdown_pad");
+			btn   = document.getElementById("start_btn");
+			time_setter = document.getElementById("time_setter");
+
+			var db = document.getElementById("debug_block");
+			var str = "";
+			for(var i=0;i<color_array.length;i++){
+				str += "<td><div style='width:100px;height:100px;background:"+color_array[i]+";'> </div></td>";
+			}
+			db.innerHTML = "<table>" + str + "</table>";
+
+			var sb = document.getElementById("score_board");
+			var str = "";
+			str += "<tr>";
+			for(var i=0;i<8;i++){
+				str += "<td><b>第 "+(i+1)+" 組</b><br><input type='text' id='score_"+i+"' value=0 style='text-align:center;font-size:52px;width:100px;height:100px;border:2px solid black;'></td>";
+			}
+			str += "</tr>"
+			str += "<tr>";
+			for(var i=0;i<7;i++){
+				str += "<td><input type='button' value='得分!' onclick='document.getElementById(\"score_"+i+"\").value=parseInt(document.getElementById(\"score_"+i+"\").value)+1' style='width:100px;'></td>";
+			}
+			str += "</tr>"
+			sb.innerHTML = "<table>" + str + "</table>";
+
+		}
+		
+		function button_event(){
+			if(game_state==0){
+				//start
+				btn.value = "停止遊戲。";
+				time_setter.disabled = true;
+				game_state = 1;
+
+				ques_counter = 0;
+				timer = loop_time = time_setter.value * 1000;
+				INTERVAL = setInterval(time_event, PERIOD);
+				setQuestion();
+			}
+			else{
+				//stop
+				btn.value = "開始挑戰！";
+				time_setter.disabled = false;
+				game_state = 0;
+
+				t_pad.innerHTML = "-";
+				q_pad.innerHTML = "？";
+				clearInterval(INTERVAL);
+			}
+		}
+
+		function time_event(){
+			if(game_state==0) return ;
+
+			timer -= PERIOD;
+			t_pad.innerHTML = (timer/1000);
+
+			if(timer<=0){
+				timer = loop_time;
+				setQuestion();
+			}
+
+		}
+
+		function setQuestion(){
+			var t_r = randInt(text_array.length);
+			var c_r = randInt(color_array.length);
+
+			if(game_state==0) return ;
+			q_pad.innerHTML = "";
+
+			ques_counter += 1;
+			if(ques_counter>MAX_QUES){
+				button_event();
+				return 1;
+			}
+	
+			setTimeout(function(){ 
+				if(game_state==0) return ;
+				if(COLOR_TARGET==0)
+					q_pad.innerHTML = "<font style=\"color:"+color_array[c_r]+";\">" + text_array[t_r] + "</font>";
+				else
+					q_pad.innerHTML = "<font style=\"background:"+color_array[c_r]+";color:white;\">" + text_array[t_r] + "</font>";
+			 }, 200);
+		}
+
+		function randInt(num){
+			return Math.floor(Math.random()*(num));
+		}
+	</script>
+</head>
+<body onload="initialize()">
+	<center>
+	<table border=0 style="padding:5;">
+		<tr>
+			<td rowspan=3 style="width:500px;height:500px;text-align:center;border:2px solid;font-size:168px;font-family:標楷體;">
+				<b><div id="question_pad">？</div></b>
+			</td>
+			<td style="width:160px;height:30px;text-align:center;background:#ccc;">
+				<b>倒數計時</b>
+			</td>
+		</tr>
+		<tr><td style="height:300px;text-align:center;background:#dfdfdf;font-size:72px;">
+				<b><div id="countdown_pad">-</div></b>
+		</td></tr>	
+		<tr><td style="text-align:center;background:#000;color:#fff;">
+				回答時間：<input id="time_setter" type="number" value="1.5" min="1" max="3" step="0.5"/><p/>
+				<input id="start_btn" type="button" value="開始挑戰！" onclick="button_event()" style="width:90%;height:80px;font-size:24px;"/>
+
+		</td></tr>	　
+	</table>
+
+
+<hr>
+	<div id="score_board"></div>
+	<div id="debug_block"></div>
+
+<p>
+<hr>
+<center>作者：Hazmole</center>
+
+	</center>
+</body>
+</html>
