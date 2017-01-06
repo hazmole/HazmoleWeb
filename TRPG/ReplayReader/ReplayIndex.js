@@ -18,7 +18,7 @@ var ReplayIndex = {
 			"土御門 嵐" 	: "#bf00ff",
 		},
 		Docs: [
-			{title:"團務", url:"index.txt"},
+		//	{title:"團務", url:"index.txt"},
 			{title:"2015.04.06-試導入", 					url:"DH-0.txt"},
 			{title:"2015.05.29-導入(上)",					url:"DH-1.txt"},
 			{title:"2015.06.05-導入(下)&第一巡迴(上)", 		url:"DH-2.txt"},
