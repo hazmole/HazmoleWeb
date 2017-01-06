@@ -1,0 +1,63 @@
+﻿<html>
+<head>
+	<link rel=stylesheet type=text/css href=mystyle.css>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+	<script type="text/javascript" src="js/Hw6.js"></script>
+<!--
+===============
+Note
+===============
+0.Map Event
+1.get user Location(using HTML5)
+2.Routing by Click
+3.search address
+4.place library
+5.info window
+6.add marker
+7.display searching Circle
+-->
+
+
+</head>
+<body background=bg.jpg onload="initialize()" >
+<center>
+	<font size=5 color=#fff><b>作業六：Google地圖</b></font><br>
+	<font color=#fff>Author:黃主同</font>
+	
+	<hr>
+
+	<table border=2>
+		<tr>
+			<td rowspan=7><div id="Map_Canvas" style="width:640; height:480"></div></td>
+			<td class=TdTitle style="height:30px;width:200px;">搜尋功能</td>
+		<tr>
+			<td style="vertical-align:top;height:150px;width:200px;">
+			<table>
+				<tr><td width=200>搜尋地址：<input value="圖書館" id="SearchName"><input type=button value="搜尋" id="SearchButton"></td>
+				<tr><td>
+					<table border=2>
+						<tr><td id="SearchResult" width=200 height=80 >
+							<center>-搜尋結果-
+					</table></td>
+			</table>
+			</td>
+		<tr>
+			<td class=TdTitle style="height:30px;">新增功能</td>
+		<tr>
+			<td style="vertical-align:top;height:80px;">
+			<table>
+				<tr><td>名稱：<input value="未命名圖書館" id="NewMarkerName"></td>
+				<tr><td><input type=button value="新增圖書館" id="NewMarker"></td>
+			</table>
+			</td>
+		<tr>
+			<td class=TdTitle style="height:30px;">其他</td>
+		<tr>
+			<td style="vertical-align:top;height:40px;">
+				<input type=button value="開/關掃描範圍" style="width:100%;" id="ScanButton"><br>
+				<input type=button value="回到使用者位置" style="width:100%;" id="HomeButton">
+		<tr>
+			<td><img src="headpic.jpg" height=100 width=100>
+	</table>
+</body>
+</html>

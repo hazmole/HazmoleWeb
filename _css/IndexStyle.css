@@ -1,0 +1,40 @@
+.bodyBack {
+    background: -webkit-linear-gradient(#392946, #392946, black); 	/* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(		#392946, #392946, black); 	/* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(	#392946, #392946, black); 	/* For Firefox 3.6 to 15 */
+    background: linear-gradient(		#392946, #392946, black); 	/* Standard syntax (must be last) */
+    background-attachment: fixed;
+}
+.OpcaBoard {
+    background: url(../_img/back.png) rgb(255, 255, 255) ;
+    background: url(../_img/back.png) rgba(255, 255, 255, .1);
+    
+    position:absolute;
+    width:1300;
+    height:630;
+    left:50%;
+    margin-left:-650;
+    
+    border-radius: 10px;
+}
+
+/*
+﻿table{
+	border:0px;
+}
+th { 
+	font-weight: bold;
+	text-align:center;
+}
+div {
+	overflow: hidden;
+}
+
+.onMouse:hover{
+	padding:2;
+}
+
+th.blue{
+	color:#012b7b;
+	text-decoration:underline; 
+}*/
