@@ -149,6 +149,8 @@ function Paragraph(type, rawData, c_scheme){
 		var color = getUserColor(c_user);
 		var style = ((color)? ("background:"+color): "")+";";
 
+		if(color && getColorBrightness(color)<100) style+="color:#ffffff;";
+
 		return "<div class=\"block subTitle\" style=\""+style+"\">"+title+"</div><br/>";
 	}
 	function renderNextEp(){
@@ -163,6 +165,14 @@ function Paragraph(type, rawData, c_scheme){
 		var block = "<div class=\"block content\" style=\"background:#C8C8C8;\">"+data+"</div>";
 
 		return title + block;
+	}
+
+	function getColorBrightness(color){
+		var br = 0;
+		for(var i=0;i<3;i++){
+			br += parseInt("0x"+color[2*i+1]+color[2*i+2]);
+		}
+		return br;
 	}
 
 	// Support
