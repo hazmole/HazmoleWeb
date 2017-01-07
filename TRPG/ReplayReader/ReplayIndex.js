@@ -32,7 +32,7 @@ var ReplayIndex = {
 			{title:"2016.07.11-阿紅復出", 	url:"DoP-1.txt"},
 			{title:"2016.07.12-初入朱紅大宅", 		url:"DoP-2.txt"},
 			{title:"2016.07.14-第二日於朱紅大宅", 	url:"DoP-3.txt"},
-		//	{title:"2016.07.25-第三日的調查", 		url:"DoP-4.txt"},
+			{title:"2016.07.25-第三日的調查", 		url:"DoP-4.txt"},
 		//	{title:"2016.07.27-儲藏室的死鬥", 		url:"DoP-5.txt"},
 		//	{title:"2016.07.31-尾聲", 				url:"DoP-6.txt"},
 		]
