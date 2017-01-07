@@ -1,5 +1,18 @@
 var ReplayIndex = {
 
+	"DND5E-DoP": {
+		TITLE: "【DND5E】恆水卞的奇妙冒險：鳳凰之死",
+		ROUTE: "DND5e_DeathOfPhoenix/",
+		ColorScheme: {
+			"GM"			: "#9900ff",
+			"梨默"			: "#000000",
+			"阿紅"			: "#ff0000",
+		},
+		Docs: [
+			{title:"2016.07.10-梨默：個人導入", 	url:"DoP-0.txt"},
+		]
+	},
+
 	"Magica-DH": {
 		TITLE: "【魔道書大戰】魔偶之館",
 		ROUTE: "Magica_DollsHouse/",
