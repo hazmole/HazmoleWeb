@@ -4,9 +4,17 @@ var ReplayIndex = {
 		TITLE: "【DND5E】恆水卞的奇妙冒險：鳳凰之死",
 		ROUTE: "DND5e_DeathOfPhoenix/",
 		ColorScheme: {
-			"GM"			: "#9900ff",
 			"梨默"			: "#000000",
 			"阿紅"			: "#ff0000",
+
+			"GM"			: "#9900ff",
+			"商隊大叔"		: "#9900ff",
+			"衛兵"			: "#9900ff",
+			"高個男性"		: "#9900ff",
+			"佐爾"			: "#9900ff",
+			"佐爾"			: "#9900ff",
+			"佐爾"			: "#9900ff",
+
 		},
 		Docs: [
 			{title:"2016.07.10-梨默：個人導入", 	url:"DoP-0.txt"},
