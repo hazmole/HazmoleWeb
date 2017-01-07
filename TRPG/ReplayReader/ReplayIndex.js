@@ -1,6 +1,6 @@
 var ReplayIndex = {
 
-	"DND5E-DoP": {
+	"DND-DoP": {
 		TITLE: "【DND5E】恆水卞的奇妙冒險：鳳凰之死",
 		ROUTE: "DND5e_DeathOfPhoenix/",
 		ColorScheme: {
