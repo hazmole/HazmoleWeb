@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>蟲鳴之時-規則</title>
+	<meta name="Author" content="Hazmole">
+	<link rel="shortcut icon" href="../../src/hz_icon.ico">
+	<meta http-equiv="Content-Type" content="text/html" ;="" charset="UTF-8">
+	<meta http-equiv="Content-Language" content="zh-TW">
+	
+	<script src="../../lib/jquery-1.11.1.min.js"></script>
+	<script src="../../bootstrap/js/bootstrap.js"></script>
+	<link rel="stylesheet" href="../../bootstrap/css/bootstrap.css">
+	
+	<script src="Content-Handle.js"></script>
+	
+	<style type="text/css">
+
+	</style> 
+	<script>
+		function changeFrameSize(w,h){
+			var frame = $('#frame').get(0);
+			frame.style.width = w+"px";
+			frame.style.height= h+"px";
+		}
+		
+		function setTable(){
+			var tbody = $('tbody[name=myData]');
+			
+			tbody.each(function(index, value){
+				var url = value.getAttribute("url");
+				value.innerHTML = "loading...";
+				$.get(url)
+					.done(function( data, textStatus ) {
+						var lines = data.split('\n');
+						var num = parseInt(lines[0]);
+						var text = "";
+						for(var i=1;lines[i]!=null;i++){
+							text += "<tr>";
+							var tokens = lines[i].split(',');
+							for(var j=0;j<num;j++)	text += "<td"+((j==0)? " class=active": "")+">"+tokens[j]+"</td>";
+						}
+						value.innerHTML = text;
+					})
+					.fail(function( jqxhr, settings, exception ) {
+						setAlert(exception);
+					});
+				
+			});
+		}
+		
+		function setWindow(){
+			var url = $(this).attr("href");
+			var page= (url=='#top')? 'page-main': 
+						(url=='#1')? 'page-create':
+						(url=='#2')? 'page-check':
+						(url=='#3-1')? 'page-insect-form':
+						(url=='#3-2')? 'page-insect-power':
+						(url=='#3-3')? 'page-insect-erode':
+						(url=='#4')? 'page-dream':
+						(url=='#5')? 'page-battle':
+						(url=='#6')? 'page-world':
+						(url=='#7-1')? 'page-table-level':
+						(url=='#7-2')? 'page-table-damage':
+						(url=='#7-3')? 'page-table-ability':
+						(url=='#8')? 'page-answer':
+						"";
+						
+						
+			if(page=="")	setAlert("Page is now Building...");
+			else			clearAlert();
+			RuleContentAgent.setPage(page);	
+			setTable();
+		}
+		
+		function setAlert(content){
+			var info_box = $('#info');
+			info_box.addClass("alert alert-danger");
+			info_box.get(0).innerHTML = content;
+		}
+		function clearAlert(){
+			var info_box = $('#info');
+			info_box.removeClass("alert alert-danger");
+			info_box.get(0).innerHTML = "";
+		}
+		//=================
+		function initial(){
+			for(var i=0; i<$('a[name=page-click]').size(); i++){
+				$('a[name=page-click]').eq(i).click(setWindow);
+			}
+			RuleContentAgent.setPage('page-main');
+		}
+	</script>
+</head>
+<body onload='initial();'>
+	
+	<!--大標題-->
+	<tag name='top'></tag>
+	<div class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" name='page-click' href='#top' style='background:#404040;'>蟲鳴之時Neo</a>
+			</div>
+			
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+				<li><a name='page-click' href="#1">建立角色</a></li>
+				<li><a name='page-click' href="#2">檢定方式</a></li>
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" href="#">蟲的規則 <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a name='page-click' href="#3-1">類型差異</a></li>
+						<li class="divider"></li>
+						<li><a name='page-click' href="#3-2">蟲能力</a></li>
+						<li class="divider"></li>
+						<li><a name='page-click' href="#3-3">蟲蝕、成蟲化</a></li>
+					</ul>
+				</li>
+				<li><a name='page-click' href="#4">精神與夢</a></li>
+				<li><a name='page-click' href="#5">戰鬥規則</a></li>
+				<li><a name='page-click' href="#6">世界觀</a></li>
+				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" href="#">表格 <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a name='page-click' href="#7-1">消耗等級表、能力等級表</a></li>
+						<li class="divider"></li>
+						<li><a name='page-click' href="#7-2">力量傷害表、武器表</a></li>
+						<li class="divider"></li>
+						<li><a name='page-click' href="#7-3">潛在能力、特殊能力、專業技藝</a></li>
+					</ul>
+				</li>
+				<li><a name='page-click' href="#8">F&Q</a></li>
+				</ul>
+			</div><!-- /.navbar-collapse -->
+		</div>
+	</div>
+	<center>
+	
+	<div id='info' class="container"></div>
+	
+	<!--主畫面-->
+	<div id='frame' style='width:1080px;height:600px; padding:5px;background-color:#8e9cab; text-align:left; overflow-y:scroll;'>
+		<div id='main' class="container-fluid">
+		</div>
+	</div>
+	
+
+	<hr>
+	<!--簽名-->
+	Author:Hazmole 	Version:1.0+1.33
+	</center>
+	
+	<!--面板-->
+	<div class="container-fluid" style='background:#c2d1fa;text-align:center; bottom:0px;right:0px;position:fixed;overflow:hidden;'>
+		畫面大小<p>
+		<input type="radio" name="frame_size" id="size_1" onclick='changeFrameSize(720,600);'>			<label for="size_1"> 720x 600</label><br>
+    	<input type="radio" name="frame_size" id="size_4" onclick='changeFrameSize(720,1200);'>			<label for="size_4"> 720x1200</label><br>
+    	<input type="radio" name="frame_size" id="size_3" onclick='changeFrameSize(1080,600);' checked>	<label for="size_3">1080x 600</label><br>
+    	<input type="radio" name="frame_size" id="size_6" onclick='changeFrameSize(1080,1200);'>		<label for="size_6">1080x1200</label><br>
+    	<p>
+    	<a href="#top">至頂</a>
+	</div>
+	
+	<!--文檔-->
+	<div style='display:none;'>
+<div id='page-answer'>
+h3(class="page-header") F&Q
+div(class="panel panel-primary")
+	div(class="panel-heading"): b 問與答
+	ul(class="list-group")
+		li(class="list-group-item")
+			b 問：之前的規則好像有設定“體型”，不知道這版是怎樣設定的？
+			br: b 答：
+			br: t 噢，好問題，事實上這版本的體型就.....沒有設定了XD
+			br: t 想創多大就多大、想創多小就多小，只要ＧＭ同意就可以，但遺憾的是無論大小對數值都不會有影響──但是！
+			p
+				br: t 雖然對數值無影響，但是對扮演就會有不小的影響了。
+				br: t 比如說大體型可以載人、阻擋；小體型可以滲入、躲藏，這部分雖然不列在角卡裡面，不過各位還是可以思考一下適合自己蟲能力的最適體型。
+			p
+				br: t 當然，因為還是會有影響，所以還是建議跟ＧＭ討論討論（不過跟高樓一樣大的蟲或是比分子還要小的蟲就別想了吧XD）
+				br: t （簡言之一言以蔽之就是看ＧＭ（喂））
+</div>
+
+<div id='page-'>
+</div>
+
+<div id='page-battle'>
+h3(class="page-header") 戰鬥規則
+div(class="panel panel-danger")
+	div(class="panel-heading"): b 常見行為：
+	div(class="panel-body") 
+		div(class="panel panel-warning")
+			div(class="panel-heading"): b ※攻擊：
+			div(class="panel-body") 
+				p
+					t 戰鬥中出現的攻擊行為通常被視做一個主要動作，且處理流程如下：
+					ol
+						li 攻擊者進行該攻擊的命中檢定
+						li 被攻擊者對該攻擊進行應對
+				p
+					t 攻擊的類型被粗略的分為「物理攻擊」和「蟲能力攻擊」兩種。
+					br: t 攻擊者的命中檢定無關成敗，只要
+						b: font(color=red) 骰值不為1，即視作命中被攻擊者。
+					br: t 若成功命中被攻擊者，則被攻擊者必須
+						b 對其攻擊做出對應
+						n ，否則就得直接承受其攻擊。
+				ul(class="list-group")
+					li(class="list-group-item")
+						b 「物理攻擊」之命中檢定：
+						br: t 泛指一切特殊能力以外，以物理方式造成物理傷害的攻擊手段。
+						br: t 視攻擊手段不同，
+							font(color=blue) 命中檢定為不同能力值/技能的行為檢定。
+						ul
+							li 棍棒、拳頭等力量相關之攻擊　　　→　
+								b「力量」
+								n 的行為檢定
+							li 飛鏢、投擲物等要求準確之攻擊　　→　
+								b 「靈敏」
+								n 的行為檢定
+							li 槍械、特殊武裝要求專業之攻擊　→　
+								b 「相關特技」
+								n 的行為檢定
+					li(class="list-group-item")
+						b 「蟲能力攻擊」之命中檢定：
+						br: t 泛指一切以「使用蟲能力」進行之攻擊手段。
+						br: t 即使產生之攻擊手段符合一般物理（如製造出長矛噴射出去），由於牽涉到蟲能力之使用，故仍視做「蟲能力攻擊」。
+						br: t 在沒有干涉的情況下，此類攻擊之
+							b: font(color=red) 命中檢定視作自動成功
+							n ，且
+							b: font(color=blue) 達成值視作「2+能力等級」。
+			div(class="panel-heading"): b ※對應手段：
+			div(class="panel-body"): t 常見的對應手段如下：
+				ul(class="list-group")
+					li(class="list-group-item")
+						b 迴避：
+						br: t 
+							b: font(color=red) 一回合只能進行一次迴避的應對。
+						br: t 進行
+							font(color=blue)
+								b 「靈敏」
+								n 的行為檢定
+							n ，在一般狀況下，若成功則可避開該攻擊，並不用承受其帶來的傷害；若失敗則承受該攻擊帶來的傷害。
+						br: t 但是攻擊的狀況而定，有可能存在無法迴避的攻擊、或是迴避成功仍得承受一部分傷害的攻擊。
+						br: t 迴避的難度由GM決定。但原則上迴避的基本難度為4，且攻擊者的每2點達成值會使基本難度+1。
+						br: t 蟲以外的角色進行迴避時，可以享有
+							font(color=blue): b 「半迴避」
+							n 的特權：若達成值大於迴避難度的一半，則可以使傷害下降1個等級。
+					li(class="list-group-item")
+						b 格擋：
+						br: t 限定對應一部分的「物理攻擊」。
+						br: t 進行
+							font(color=blue)
+								n 以
+								b 「力量」
+								n 加權的對抗檢定
+							n，並將攻擊者命中檢定的達成值當作施加者的達成值。等同進行難度為攻擊者命中檢定達成值的「力量」行為檢定
+						br: t 若檢定成功，則減少一部分承受的傷害（通常為使傷害下降2個等級）。若失敗則承受該攻擊帶來的傷害。
+					li(class="list-group-item")
+						b 精神抵抗：
+						br: t 限定對應一部分的「精神攻擊」，通常是由蟲的「特殊能力」造成。
+						br: t 進行
+							font(color=blue)
+								n 以
+								b 「穩重」
+								n 加權的對抗檢定
+							n ，並將攻擊者命中檢定的達成值當作施加者的達成值。
+						br: t 若檢定成功，則可減免全部或部份之效果。
+					li(class="list-group-item")
+						b 保護：
+						br: t 限定這回合尚未動作的角色，在自己以外的角色遭受攻擊時使用。
+						br: t 使用這個對應
+							font(color=red): b 視作一次主要動作
+							n ，若這回合已經進行過主要動作，則不能使用此對應。使用後這回合將無法再進行其他主要動作。然而，可以在同一回合內針對同一目標多次使用此對應。
+						br: t 進行
+							font(color=blue)
+								n 以
+								b 「靈敏」
+								n 加權的行為檢定
+							n ，難度為攻擊者命中檢定達成值的一半，此外，自己欲代替承受傷害的對象距離自己每超過1公尺，難度額外增加1。
+						br: t 若檢定成功，則可代替目標承受攻擊的效果。若檢定失敗，則目標正常承受效果，自己則喪失此回合的動作權。
+					li(class="list-group-item")
+						b 其他手段：
+						br: t 除了上述應對方法之外，也可以採用其他應對手段。其適用時機、效果、難度則由ＧＭ做定奪。
+div(class="row")
+	div(class="col-md-6")
+		div(class="panel panel-info")
+			div(class="panel-heading"): b 傷害：
+			div(class="panel-body") 
+				t 當攻擊者的命中檢定通過、且被攻擊者應對失敗的時候，被攻擊者會承受該攻擊所造成的傷害，並減少等同該傷害值的生命力。
+				br: t 攻擊時，依照攻擊手段不同，所造成之傷害如下：
+				ul(class="list-group")
+						li(class="list-group-item")
+							b 通常攻擊：
+							br: t 傷害＝攻擊者的「基本傷害」。
+						li(class="list-group-item")
+							b 武器、蟲能力（明定傷害值）：
+							br: t 使用武器、攻擊性蟲能力等，有明確記錄「傷害」數值的攻擊手段，則攻擊傷害參照記錄文字。
+						li(class="list-group-item")
+							b 非一般攻擊手段：
+							br: t 使用上述以外之攻擊手段時，ＧＭ可以依照遊戲考量，為該攻擊手段給定一個傷害值。
+				b 「手下留情」：
+				br: t 在命中檢定前，攻擊者可以宣告該攻擊為「手下留情」。
+				br: t 該攻擊將不會使目標生命力因此行動降到0或以下。
+				br: t 做出「手下留情」宣言的攻擊，
+					b: font(color=red) 攻擊檢定會有-2的修正。
+				br: t 「蟲」的攻擊無法進行「手下留情」的宣言。
+	div(class="col-md-6")
+		div(class="panel panel-info")
+			div(class="panel-heading"): b 護甲
+			div(class="panel-body") 
+				p
+					t 在承受傷害前，被攻擊者可以藉由自己身上的「護甲」，減免一部分所應承受的的攻擊傷害。
+					br: t 對每一次的攻擊，被攻擊者最多可以減少等同自己「護甲」值的傷害。此外，實際承受傷害不得低於０。
+					br: b: font(color=blue): t: t 實際承受傷害　＝　攻擊傷害－護甲
+				p
+					t 視護甲的成因與結構不同，存在著護甲無法抵擋，或只能抵擋部分的傷害類型。
+					br: t 此外，視護甲類型不同，攻擊者也可以透過破甲的手段減少「護甲」的數值。
+					br: t 根據破甲手段、以及護甲的類型不同，由ＧＭ斟酌破甲的持續時間與成效。
+
+div(class="panel panel-warning")
+	div(class="panel-heading"): b 昏迷、死亡與缺陷化：
+	div(class="panel-body") 
+		div(class="panel panel-default")
+			div(class="panel-heading"): b ※昏迷：
+			div(class="panel-body")
+				t 當角色的
+					font(color=red): b 《生命力》小於0
+					n 時，視作因重傷而陷入昏迷狀態。
+				br: t 在昏迷狀態下，角色無法作出任何行動，且無法使用蟲能力、分離型的蟲會自動消失、且若在同化狀態中昏迷，則會自動解除同化
+				br: t 只有當角色的《生命力》高於0時，才能脫離昏迷狀態。
+			div(class="panel-heading"): b ※死亡：
+			div(class="panel-body")
+				t 當角色受到過於嚴重的傷害(
+					font(color=red): b 《生命力》-6以下
+					n )，或是在昏迷狀態下再次受到攻擊，則角色會陷入死亡狀態。
+				br: t 陷入死亡狀態的角色……就死了。基本上不存在復活手段。
+			div(class="panel-heading"): b ※缺陷化：
+			div(class="panel-body")
+				t 當角色的《夢之力》歸零，則該角色陷入「缺陷化」，並成為缺陷者－－一種類似於植物人的存在。
+				br: t 成為缺陷者的角色，基本上視作「死亡」。不存在一般的復活手段。
+div(class="row")
+	div(class="col-md-7")
+		div(class="panel panel-success")
+			div(class="panel-heading"): b 時間、行動機會：
+			div(class="panel-body") 
+				div(class="panel panel-default")
+					div(class="panel-heading"): b ※回合經過：
+					div(class="panel-body") 
+						t 戰鬥以回合為單位，分成玩家側與ＧＭ側輪流操控腳色進行動作。
+						br: t 每一回合的流逝時間基準大約為30秒，但實際流逝時間仍可彈性調整至6秒~1分鐘。
+				div(class="panel panel-default")
+					div(class="panel-heading"): b ※基本行為：
+					div(class="panel-body") 
+						t 每一回合中，每一名角色可以進行一個
+							font(color=blue) 
+								b 主要動作
+								n （攻擊、蟲能力、逃跑等）
+						br: t 除此之外，若情況合理且ＧＭ許可，玩家可以在進行主要動作的同時，進行其他的
+							font(color=blue): b 副動作
+							n ，諸如使用蟲能力、打電話、傳遞物品等等……
+						font(color=red size=1) 
+							br: t: t ＊一回合實際上有多長，能做的事情有什麼，都沒有明確的定義。
+							br: t: t ＊在此僅以「一個行動」作為模糊的基礎單位。
+							br: t: t ＊在遊戲進行中，請彼此建立共識，並以ＧＭ之決斷為最終依歸。
+	div(class="col-md-5")
+		div(class="panel panel-primary")
+			div(class="panel-heading"): b 戰鬥中的修正：
+			div(class="panel-body") 
+				t 在「附蟲者」的戰鬥中，光明正大對決的機會相當稀少，以下列出一些比較常見的狀態修正，以供GM參考：
+			table(class="table")
+				tr
+					th 在無預期有襲擊的狀況下，遭到奇襲：
+					td(width=120) 應對檢定-4
+				tr
+					th 在預期有襲擊的狀況下，被位置不明的敵人襲擊：
+					td 應對檢定-2
+				tr
+					th 遭到夾擊：
+					td 應對檢定-1
+				tr
+					th 攻擊無法行動的目標：
+					td 攻擊達成值+1
+				tr
+					th 攻擊失去意識的目標：
+					td 攻擊達成值+2
+				tr: th(colspan=2) ...
+</div>
+<div id='page-insect-power'>
+h3(class="page-header") 蟲的規則：蟲之力
+div(class="panel panel-warning")
+	div(class="panel-heading"): b ※蟲之力：
+	div(class="panel-body") 
+		t 蟲之力分為兩種：「潛在能力」與「特殊能力」。
+		br: t 依照其不同的效果性質，玩家可自由地在任何時候使用。
+div(class="panel panel-default")
+	div(class="panel-heading"): b 潛在能力：
+	div(class="panel-body") 
+		t 任何時候，消耗自己的1點「夢之力」以使用，並依據「表：潛在能力」執行效果。
+div(class="panel panel-default")
+	div(class="panel-heading"): b 特殊能力：
+	div(class="panel-body") 
+		p
+			t 每一種蟲通常只會擁有一種特殊能力，在設定特殊能力時，可以參考「表7：特殊能力」，或是與GM討論。
+			br: t 在一個能力的基礎下，可以有多種運用方式，依據應用方式不同，玩家可以自行設定其「最大距離」「效果」，並交由GM決定該應用的「消耗等級」做為參考。
+			br: t 不建議在遊戲進行中，才臨時設計新的應用方式，因為決定一個應用方式的效果及消耗通常會需要一段時間，這部分請與你的GM妥善溝通。
+		p
+			t 使用蟲的「特殊能力」時，通常的流程如下：
+			ol
+				li 宣告使用特殊能力與目的
+				li 宣告是否對該能力使用「成長」調整能力等級。
+				li 執行能力效果。
+				li 進行精神檢定，結算消耗的《精神力》。
+			t 當角色的《精神力》等於0時，無法使用任何蟲的「特殊能力」(即使該消耗為0)。且若玩家在同化狀態中，則立刻解除同化狀態。
+		p
+			b 「成長」的使用：
+			br: t 若蟲的《成長》不為0，則可以在使用能力前，指定想要強化或弱化的一項效果，在這一次的使用中，
+				font(color=blue) 該效果可以上升或下降不超過《成長》數值的效果等級
+				n 。此外，受到此宣告影響的能力，其消耗等級也會跟著能力等級變動。
+			br: t: font(color=red) 每回合只能使用《成長》的效果一次。
+		p
+			b 精神力影響：
+			br: t 當角色的《精神力》等於0時，
+				font(color=red) 無法使用任何蟲的「特殊能力」
+				n (即使該消耗為0)。且若玩家在同化狀態中，則立刻解除同化狀態。
+			br: t 關於精神力的消耗，請參考條目：精神力與夢之力
+</div>
+<div id='page-table-ability'>
+h3(class="page-header") 表格：潛在能力表、特殊能力參考表、專業技藝參考表
+div(class="panel panel-primary")
+	div(class="panel-heading"): b 潛在能力表
+	table(class="table table-hover table-bordered")
+		tr(class="info")
+			th(width=100) 名稱
+			th(width=80) 條件
+			th 效果
+		tr
+			th(class="active") 亞成蟲
+			td 分離型
+			td 在持續時間內，蟲的《力量》+6，並額外獲得4點《護甲》。
+				br 持續回合為2+角色《穩重》
+		tr
+			th(class="active") 神速境界
+			td 分離型
+			td 在持續回合內，蟲可以額外行動一次。
+				br 持續回合為2+角色《穩重》
+		tr
+			th(class="active") 狂戰士
+			td 同化型
+			td 限同化狀態下發動。
+				br 在持續時間內，《力量》《靈敏》《護甲》+4。
+				br 持續回合為2+角色《穩重》
+		tr
+			th(class="active") 武器同化
+			td 同化型
+			td 限同化狀態下發動。
+				br 在持續時間內，自己使用武器進行攻擊的命中檢定自動成功(骰值視作10)，並可以在攻擊前減少自己N點的《精神力》，以增加2xN點傷害。
+				br 持續回合為2+角色《穩重》
+		tr
+			th(class="active") 領域之主【獨尊】
+			td 特殊型
+			td 在持續時間內，張開的領域範圍內，自己以外的蟲使用蟲能力時，需進行難度為6的無加成檢定，成功方可使用蟲能力。且該能力的消耗等級上升1級。
+				br 領域的範圍原則上為自己方圓10公尺的距離，持續回合為4+角色《穩重》
+		tr
+			th(class="active") 領域之主【過載】
+			td 特殊型
+			td 在持續時間內，張開的領域範圍內，自己蟲能力的各項效果上升1階(包括威力、距離)，使用蟲能力的達成值上升為4+能力等級，但消耗維持不變。
+				br 領域的範圍與自己蟲能力的距離相同(上升之後)，持續回合為4+角色《穩重》
+div(class="row")
+	div(class="col-md-8")
+		div(class="panel panel-primary")
+			div(class="panel-heading"): b 特殊能力參考表
+			table(class="table table-hover table-bordered")
+				tr(class="success")
+					th 能力名稱
+					th 描述
+				tbody(name="myData" url="data_ref_special.dat")
+	div(class="col-md-4")
+		div(class="panel panel-primary")
+			div(class="panel-heading"): b 專業技藝參考表
+			table(class="table table-hover table-bordered")
+				tr(class="success")
+					th 名稱
+					th 關聯屬性
+				tbody(name="myData" url="data_ref_skill.dat")
+
+</div>
+<div id='page-table-damage'>
+h3(class="page-header") 表格：力量傷害表、武器表
+div(class="row")
+	div(class="col-md-4")
+		div(class="panel panel-primary")
+			div(class="panel-heading"): b 力量傷害對應表
+			table(class="table table-hover table-bordered")
+				tr(class="danger")
+					th 力量
+					th 基本傷害
+				tbody(name="myData" url="data_stregth_dmg.dat")
+	div(class="col-md-7")
+		div(class="panel panel-primary")
+			div(class="panel-heading"): b 武器傷害參考表
+			table(class="table table-hover table-bordered")
+				tr(class="danger")
+					th 武器
+					th 攻擊檢定
+					th 攻擊距離
+					th 傷害
+					th 傷害類型
+				tbody(name="myData" url="data_weapon_dmg.dat")
+</div>
+<div id='page-table-level'>
+h3(class="page-header") 表格：消耗等級表、能力等級表
+div(class="row")
+	div(class="col-md-8")
+		div(class="panel panel-primary")
+			div(class="panel-heading"): b 能力等級對應表
+			table(class="table table-hover table-bordered")
+				tr(class="warning")
+					th 等級
+					th 最大距離
+					th 傷害
+					th 修正
+					th 護甲
+				tbody(name="myData" url="data_ability_lv.dat")
+	div(class="col-md-4")
+		div(class="panel panel-primary")
+			div(class="panel-heading"): b 消耗等級表
+			table(class="table table-hover table-bordered")
+				tr(class="info")
+					th 等級
+					th 難度
+					th 檢定成功消耗
+					th 檢定失敗消耗
+				tbody(name="myData" url="data_dream_cost.dat")
+</div>
+<div id='page-insect-erode'>
+h3(class="page-header") 蟲的規則：蟲蝕、成蟲化
+div(class="panel panel-warning")
+	div(class="panel-heading") ※蟲蝕：(此為可選規則)
+	div(class="panel-body")
+		p
+			t 隨著被蟲寄宿的時間慢慢過去，即使相當克制的不使用蟲之力，宿主的精神力仍會慢慢的被蟲侵蝕。通常，被「蟲」寄宿的宿主最長活不過10年，這也或多或少造就了「附蟲者」普遍浮躁的現象。
+			br: t 通常，以3年為周期，蟲的
+				b 《寄宿等級》會上升1級。
+			br: t 每上升1級《寄宿等級》，角色便會
+				b: font(color=red) 減少1點《夢之力》
+				n 。但作為代價，每1個上升的《寄宿等級》，會使角色在
+				b: font(color=blue) 精神檢定上獲得+2的修正
+				n ，蟲的
+				b: font(color=blue) 《成長》額外增加1點
+				n ，且所有
+				b: font(color=blue) 應用的消耗等級減少1。	
+		p: t 每次劇本結束時，玩家可以選擇上升1級《寄宿等級》。但是，當角色的《夢之力》僅剩下1點時，不可上升其《寄宿等級》。
+		p: b: t 另外，建議不要使用此規則創建新角色。
+div(class="panel panel-warning")
+	div(class="panel-heading") ※成蟲化：
+	div(class="panel-body")
+		p: t 當蟲吞食了相當程度的精神力，且宿主的精神力已不足支配的時候，蟲會發生巨大的變化。能力高速增長、行為不受控制、通常伴隨著驚人的破壞與威脅－－進入這種狀態的蟲，稱之為「成蟲化」。
+		p
+			t 「成蟲化」的狀態不可逆，一旦蟲進入「成蟲化」。則蟲的宿主會成為「缺陷者」，陷入如同植物人的狀態中。且「成蟲化」的蟲直到能量耗盡而死、或是遭到狙殺之前，會一直進行著無意義的破壞行動。
+			br: t 無論是什麼類型的「蟲」，在進入「成蟲化」時都會擁有實體、並獲得極為強大的力量。
+		p: t 在遊戲中，當
+			font(color=red) 附蟲者的《夢之力》歸零時
+			n ，其「蟲」便可能進入「成蟲化」狀態。（進入「成蟲化」與否由ＧＭ決定，並非絕對）
+</div>
+<div id='page-insect-form'>
+h3(class="page-header") 蟲的規則：類型差異
+div(class="panel panel-warning")
+	div(class="panel-heading") 類型差異：數值
+	div(class="panel-body")
+		t 蟲的種類被分為三類：分離型、同化型、特殊性。
+		br: t 在遊戲進行中，這三種類型的蟲依循著以下規則：
+	ul(class="list-group")
+		li(class="list-group-item")
+			b 分離型：
+			ul
+				li 初始能力值：
+					font(color=blue) 《力量4》《靈敏0》《裝甲2》《成長0》
+				li
+					b 額外個體
+					n ：當蟲出現時，與宿主視做兩個不同的個體，分別處理其行動。
+				li
+					b 傷害承受
+					n ：當蟲受到低於4點的傷害時，宿主的《精神力》減少1點。此外，傷害每超過4,8,12,16...額外再減少1D4點《精神力》
+				li
+					b 精神耗竭
+					n ：當宿主《精神力》歸零時，分離型的蟲無法再行動
+	ul(class="list-group")
+		li(class="list-group-item")
+			b 同化型：
+			ul
+				li 初始能力值：
+					font(color=blue) 《力量4》《靈敏4》《裝甲2》《成長1》
+				li
+					b 同化能力
+					n ：宿主可以在任何時候與蟲同化，進入同化狀態，然而，若進入同化狀態，則必須要
+						font(color=red) 維持最少一回合
+						n 才能主動解除同化狀態。
+				li
+					b 屬性取代
+					n ：同化狀態中，角色的
+						font(color=red) 「力量」「靈敏」被蟲的同名屬性取代，「護甲」追加蟲「護甲」之數值，且角色被視作「蟲」
+						n 。此變化在結束同化狀態後自動消失。
+				li
+					b 傷害減免
+					n ：同化狀態中，若即將受到4點以內的傷害時，可以減少2點《精神力》以代替傷害
+				li
+					b 精神耗竭
+					n ：每維持同化狀態一回合，宿主需減少1點精神力。當宿主《精神力》歸零時，自動解除同化狀態。
+	ul(class="list-group")
+		li(class="list-group-item")
+			b 特殊型：
+			ul
+				li 初始能力值：
+					font(color=blue) 《力量NA》《靈敏NA》《裝甲NA》《成長3》
+				li
+					b 耗損減免
+					n ：當進行因使用蟲能力而觸發的精神檢定時，
+						font(color=red) 減免一半本應消耗的《精神力》
+						n (剩餘值無條件進位)
+				li
+					b 精神優勢
+					n ：當進行因使用蟲能力而觸發的精神檢定時，額外獲得+2加值。
+div(class="panel panel-warning")
+	div(class="panel-heading") 類型差異：扮演
+	div(class="panel-body")
+		t 除了遊戲中數值與效果上的差異之外，其在遊戲中的扮演也有極大差異：
+	ul(class="list-group")
+		li(class="list-group-item")
+			b 分離型：
+			br: t 具有實體存在的類型，但可以隨宿主的意志自由現身、隱藏。
+			br: t 通常以蟲的肉搏能力作為主要武器，亦有將一定大小的蟲作為交通工具的使用例子。得以物理性的與世界互動是其最大優點。遊戲層面上，此類型的蟲被視作獨立個體，代表著這種蟲可以單獨作戰，在前線保護宿主的安危。
+	ul(class="list-group")
+		li(class="list-group-item")
+			b 同化型：
+			br: t 可以藉由與宿主同化，使宿主的身體能力上升的類型。
+			br: t 蟲不具有實體，在扮演上可以以幻影、虛像等方式現身，但無法以這個狀態被攻擊或是與其他物體互動。由於透過同化宿主發揮力量，這類型的蟲在精神力的消耗上也較凶狠。光是維持同化就必須付出一定的精神力。遊戲層面上，除了需要注意精神力的消耗上，幾乎是沒有缺點的類型。
+	ul(class="list-group")
+		li(class="list-group-item")
+			b 特殊型：
+			br: t 類型特殊，會給予宿主不可思議能力的類型。
+			br: t 與同化不同，這種類型的蟲就像是使自己的宿主成為了擁有異能的超能力者一般。然而，也就是如此而已。相對缺乏了保護自己宿主的手段。這種類型的「特殊例外」特別多，例如蟲擁有自己的意志、多重能力、各種莫名的副作用等等……是相當棘手的一種類型。
+</div>
+<div id='page-world'>
+h3(class="page-header") 世界觀
+div(class="panel panel-default"): div(class="panel-body")
+	t 並沒有嚴格限制世界觀，但希望可以以「附蟲者是為人所恐懼的存在」的中心思想去構築世界觀。
+	br: t 至於要讓「附蟲者」暴露在社會大眾下，抑或僅止於街坊巷語的都市傳說中，就交由ＧＭ自行決定了。
+
+div(class="panel panel-primary")
+	div(class="panel-heading") 專有名詞介紹：
+	ul(class="list-group")
+		li(class="list-group-item")
+			b 被蟲寄宿的原因：
+			br: t 強烈的夢想，所以附蟲者以青少年的人數最多。
+		li(class="list-group-item")
+			b 關於附蟲者：
+			br: t 附蟲者，專門指稱被「蟲」所寄宿的人們。
+			br: t 由於「蟲」大多會選擇擁有強烈夢想的人寄宿，所以正值青春洋溢、愛作夢的少年少女們尤其容易成為附蟲者。且因為宿主的精神力會因被「蟲」侵蝕而減少，導致附蟲者的壽命大幅縮短。是以附蟲者的族群組成，多以十幾二十歲的青少年為主。
+		li(class="list-group-item")
+			b 關於缺陷者：
+			br: t 缺陷者，是指精神力被「蟲」侵蝕殆盡後，呈現類植物人狀態的前宿主。
+		li(class="list-group-item")
+			b 關於「蟲」：
+			p
+				t 啃食著宿主精神力、以夢想為食的不明生物。由於外觀與現實存在之昆蟲多有相似之處，故被稱作「蟲」。
+				br: t 寄宿方式不明、僅能推測其擇選宿主的條件是擁有強烈夢想的人。一個宿主身上只會有一個「蟲」，而「蟲」也只會寄宿在一個宿主上。當宿主死亡時，「蟲」通常會跟著死去。但若「蟲」因為某些原因比宿主更早死亡，宿主則會陷入失去自我的類植物人狀態－－「缺陷者」
+			p
+				t 「蟲」會藉著啃食夢想而成長，因為不具有一般生物的特徵，難以推測其生態。
+				br: t 根據觀察，「蟲」在吞食一定程度的夢想、且宿主的精神力已不足控制「蟲」時，「蟲」會進入一種名為「成蟲化」的狀態。
+				br: t 處於成蟲化狀態的「蟲」，體型會變得比平時還要巨大，獲得具體的外型、並有失去理智、四處破壞的傾向。成蟲狀態的「蟲」十分危險，即使是一流的附蟲者戰鬥員，也絕對無法與之一對一作戰。此時，夢想被消耗殆盡的宿主已經成為「缺陷者」，且殺死宿主並不會影響成蟲的「蟲」。可以說，「蟲」與宿主已經沒有關係了。
+			p
+				t 雖然被稱作「成蟲」，但也有許多研究者認為「成蟲化」並不是「蟲」的最終目的。
+				br: t 在「蟲以夢想為食」的前提下，研究者推測，「蟲」啃食宿主精神，除了透過進食維持生命之外，更有蓄意減少宿主生命力，迫使其更加賣力追求夢想的目的存在。
+				br: t 更有研究者大膽推測，當耆宿主達成其夢想的同時，就是「蟲」完全成蟲的時候，「蟲」也將和平地離開其宿主……然而這項主張並沒有獲得支持，相關實驗最終也以附蟲者的爆走失敗收場。
+				br: t 蟲的真相，仍舊是一團迷霧。
+</div>
+<div id='page-dream'>
+h3(class="page-header") 《精神力》與《夢之力》
+div(class="panel panel-success")
+	div(class="panel-heading") ※精神檢定：
+	div(class="panel-body")
+		p
+			t 精神檢定，是角色在面對可能會消耗精神力的情況時，決定其結果的檢定。
+			br: t 精神檢定的通常格式為
+				b 「(檢定難度):(A)/(B)」
+				n 。其中
+				font(color=blue)
+					b 「檢定難度」
+					n 為該次精神檢定的難度
+				，該檢定須加上角色的「穩重」修正。而
+				b: font(color=red) (A)(B)之值
+				，則分別表示
+				font(color=red)
+					b 檢定成功/失敗
+					n 時所應減少的《精神力》。
+			br: t 在進行精神檢定時，無論達成值為多少，
+				b: font(color=red) 只要骰值為1或2，就視為檢定失敗。
+		p
+			t 若在精神檢定之後，減少的精神力會使《精神力》降到0以下：
+			br: t: t 若會使《精神力》降到-1~-3之間，則蟲能力照常使用，且《精神力》歸零。
+			br: t: t 若會降到-4以下，則必須選擇是否取消該次蟲能力的效果，
+			br: t: t: t 若取消，則《精神力》歸零；
+			br: t: t: t 若不取消，則強制減少1點夢之力，且《精神力》回歸最大值。
+
+div(class="panel panel-info")
+	div(class="panel-heading") ※精神力：
+	div(class="panel-body")
+		p: t 角色的《精神力》為綜合精神、神志、殘存理智的數值。
+		p
+			b 精神力的減少：
+			br: t 每當
+				font(color=blue) 使用蟲的「特殊能力」
+				n 時，角色便必須進行一次
+				b: font(color=blue) 精神檢定
+				n。
+			br: t 除此之外，《精神力》亦可能因為目睹殘酷的畫面、受到嚴重打擊、心理創傷等因素而減少。
+		p
+			b 精神力的回復：
+			br: t 可以藉由每天7個小時的熟睡，
+				b: font(color=blue) 回復10點《精神力》。
+			br: t 此外，可以跟GM商量是否有其他回復《精神力》方法：如心理治療、芳香療法、冥想等等。
+		p
+			b 精神力耗盡：
+			br: t 當角色的《精神力》歸零時，角色並不會因此昏迷，但會陷入無法使用蟲能力、且扮演上神智不清的狀態。
+			br: t 另外，當角色的《精神力》被減少至0或0以下時，可以選擇
+				font(color=blue) 消耗1點《夢之力》，將《精神力》回復到最大值。
+
+div(class="panel panel-info")
+	div(class="panel-heading") ※夢之力：
+	div(class="panel-body")
+		p: t 角色的《夢之力》則為角色心中對「夢想」的執著度，只有「附蟲者」具備這項數值。
+		p
+			b 夢之力的減少：
+			br: t 造成《夢之力》減少的主要原因，為
+				font(color=blue) 使用蟲的「潛在能力」
+				n 與用以
+				font(color=blue) 補充《精神力》
+		p
+			b 夢之力的回復：
+			br: t: b: font(color=red) 原則上，並不存在回復《夢之力》的手段。
+			br: t 然而，當角色的《夢之力》即將歸零時，玩家可以
+				font(color=blue) 進行一次「夢想扮演」
+				n ，若GM認可其演出，則可以讓《夢之力》維持1。
+		p
+			b 夢之力的耗盡：
+			br: t 當角色的《夢之力》歸零，則角色會因此變成「缺陷者」，且其蟲也有
+				font(color=red)
+					b 可能
+					n 因此陷入「成蟲化」。
+</div>
+<div id='page-check'>
+h3(class="page-header") 檢定方式
+div(class="panel panel-default"): div(class="panel-body")
+	n 遊戲中使用D10(十面骰)進行所有檢定。
+	ul
+		li 檢定時，若達成値不小於難度，則該檢定視作成功，反之則為失敗。
+		li 骰值：　投擲D10後，其骰面的數字。
+		li 達成値：投擲D10後，其骰值加上所有正負加權後所得的數字。
+		li 難度：　表示進行檢定時，要成功所需最低之達成值的數字。
+
+div(class="panel panel-success")
+	div(class="panel-heading") ※行為檢定：
+	div(class="panel-body")
+		t 在遊戲進行中，角色發出主動行為，或是被動遭遇狀況時，則需進行的檢定。
+		br: t 檢定前，由GM告知該檢定中涉及的能力，並對骰值加上等同該能力值的加值。
+		br: t 若達成值高於難度，則檢定成功。反之則失敗。
+
+div(class="panel panel-success")
+	div(class="panel-heading") ※技能檢定：
+	div(class="panel-body")
+		t 在遊戲進行中，角色主動或被動使用專業技能時，則需進行的檢定。
+		br: t 與行為檢定的規則相同，但若角色持有該專業技能，則該檢定
+			b: font(color=blue) 額外獲得+2的修正。
+
+div(class="panel panel-success")
+	div(class="panel-heading") ※對抗檢定：
+	div(class="panel-body")
+		t 當遊戲進行中，一件事的成功與否是由複數名角色之間的角力決定，則需進行對抗檢定。
+		br: t 參與對抗檢定的角色分為兩方，施加方與對抗方。造成事件發生的一方為施加方，阻止事件發生的一方為對抗方。
+		br: t 由施加方先擲骰，其
+			b 達成值即為對抗方的難度。
+		br: t 若事件的發生是由行為檢定而來，則可使用該檢定之達成值作為施加方的達成值。
+
+div(class="panel panel-success")
+	div(class="panel-heading") ※精神檢定：
+	div(class="panel-body")
+		t 在遊戲進行中，角色使用蟲能力後，或是因某些因素受到精神衝擊時所需做的檢定。
+		br: t 檢定前，由GM告知
+			b 精神檢定之等級
+			n ，並對骰值
+			b: font(color=blue) 加上等同角色《穩重》的加值。
+		br: t 若達成值高於難度，則檢定成功。但若
+			b: font(color=red) 骰面為1、2，或達成值低於難度則失敗
+
+div(class="panel panel-success")
+	div(class="panel-heading") ※特別的骰值：(可選)
+	div(class="panel-body")
+		ul
+			li 當檢定時出現骰值為10，則該檢定結果為大成功。無論難度大小，該檢定視作成功。
+			li 當檢定中出現骰值為  1，則該檢定結果為大失敗。無論達成值大小，該檢定視作失敗。
+		font(color=red) D10骰出1和10的機率高達1/10，故不建議採用此規則
+		br: font(color=red) 在跑團前，GM必須告知玩家是否採用此規則
+</div>
+<div id='page-main'>
+h2(class="page-header") 蟲鳴之時Neo(As Insecta Singing)
+br: p: div(class="panel panel-default"): div(class="panel-body")
+	b 前言：
+	br: t 就核心而論，這是一個異能戰鬥的遊戲系統。玩家們扮演可以使用特殊能力的角色，面對著各式不同的情景而戰鬥著。題材係使用已完結之輕小說「蟲之歌」之世界觀作為基礎，延伸發展。雖多方參考了其小說內使用之詞彙與專有名詞，但此規則之世界觀設定卻已迥然不同。若說這僅僅是剽竊了其創意與名氣的贗品規則也不為過。然而，儘管如此，我仍對這規則的運行有著一定的自豪。規則內付之世界觀事實上僅供參考，若將規則的骨幹套用到其他的世界觀下，說不定也能很好的運行──我是這麼想的。
+	br: t 另外，相較於原版本的規則「蟲鳴之時」，新版的規則加入了較多的規則限制與加成，一定程度的保障了玩家做出行為的結果。透過明確的定出消耗、正負加成、效果，我相信能使ＧＭ與玩家在遊戲進行中更得心應手。
+p: div(class="panel panel-default"): div(class="panel-body")
+	b 修改履歷：
+	ul: u
+		li 1.10→1.20：追加「蟲蝕」規則的獎勵
+		li 1.20→1.30：追加「保護」行為的判例
+		li 1.30→1.31：調整「蟲能力」使用的規則與「成長」的效果
+		li 1.31→1.32：修改命中檢定之敘述：「骰面1必失敗，此外必成功」
+		li 1.32→1.33：追加「武器傷害參考表」
+</div>
+<div id='page-create'>
+h3(class="page-header") 建立角色
+t 在《蟲鳴之時》的系統中，由於玩家角色主要為被「蟲」附身之「人」，角色卡被分為「人」與「蟲」兩大部分。
+p
+div(class="panel panel-info")
+	div(class="panel-heading") 「人」
+	div(class="panel-body")
+		ul
+			li 【基本資料】角色的姓名、性別、年齡、職業、外貌等資料
+			li 【存在屬性】《生命力》《精神力》《夢之力》
+			li 【表現屬性】《力量》《靈敏》《慧黠》《穩重》《社交》
+			li 【衍生數值】《基本傷害》《護甲》
+			li 【專業技藝】２個
+	div(class="panel-heading") 「蟲」
+	div(class="panel-body")
+		ul
+			li 【基本資料】蟲之外形、稱呼、寄宿等級
+			li 【蟲種】三選一：分離型、同化型、特殊型
+			li 【屬性】《力量》《靈敏》《裝甲》《成長》
+			li 【衍生數值】《基本傷害》《護甲》
+			li 【潛在能力】
+			li 【蟲能力】
+
+div(class="panel panel-danger")
+	div(class="panel-heading") 欲撰寫一張新的角色卡，建議依循以下順序：
+	ol(class="list-group")
+		li(class="list-group-item")
+			b 「人」之【基本資料】：
+			n 詳情細節設定建議事先與GM討論過。
+		li(class="list-group-item")
+			b 「人」之【存在屬性】：
+			n 《生命力》《精神力》《夢之力》
+			ul
+				li 擲骰決定《生命力》之值：
+					b: font(color=blue) 《生命力》= (2D10/2)(進位) + 5
+				li 擲骰決定《精神力》之值：
+					b: font(color=blue) 《精神力》= (2D10/2)(進位) + 5
+				li 填入《夢之力》：
+					b 《夢之力》 = 由GM決定，預設為3
+		li(class="list-group-item")
+			b 「人」之【表現屬性】：
+			n 《力量》《靈敏》《慧黠》《穩重》《社交》
+			ul
+				li 所有【表現屬性】之初始值為 0。
+				li
+					b: font(color=red) 初始配點為 2 。
+					n 可以自由分配到任意【表現屬性】中。
+				li 可藉由減少任意【表現屬性】1點，獲得1點額外配點。
+				li: b: font(color=red) 分配範圍為 -3 ~ 3。
+				li 若任意【表現屬性】低於 0。則在相關行動上，可能會被額外要求進行檢定。
+		li(class="list-group-item")
+			b 「人」之【衍生數值】：
+			ul
+				li 《基本傷害》 = 參照「表：力量傷害表」
+				li 《護甲》 = 0
+		li(class="list-group-item")
+			b 「人」之【特殊技藝】：
+			n 設計一個「專業技藝」，或從「表：專業技藝」中，選擇並填入技藝
+		li(class="list-group-item")
+			b 「蟲」之【基本資料】：
+			n 詳情細節設定建議事先與GM討論過。
+			ul
+				li 「寄宿等級」：若採用「蟲蝕」規則，則這個項目必須謹慎填寫。若不採用，則一律填入0。
+		li(class="list-group-item")
+			b 「蟲」之【蟲種】：
+			ul
+				li 「分離型」「同化型」「特殊型」三擇一。【蟲種】會影響蟲的【屬性】與特殊性值。
+		li(class="list-group-item")
+			b 「蟲」之【屬性】：
+			n 依據【蟲種】決定初始數值。(NA表示「不具備數值」)
+			ul
+				li 分離型：
+					b: font(color=blue) 《力量4》《靈敏0》《裝甲2》《成長0》
+				li 同化型：
+					b: font(color=blue) 《力量4》《靈敏4》《裝甲2》《成長1》
+				li 特殊型：
+					b: font(color=blue) 《力量NA》《靈敏NA》《裝甲NA》《成長3》
+				li 可藉由減少任意【屬性】1點，獲得1點額外配點。【屬性】最低為0。此外，額外配點不能使《成長》增加。
+		li(class="list-group-item")
+			b 「蟲」之【衍生數值】：
+			ul
+				li 《基本傷害》 = 參照「表：力量傷害表」
+				li 《護甲》 = 《裝甲》
+		li(class="list-group-item")
+			b 「蟲」之【潛在能力】：
+			n 從「表：潛在能力」中，選擇並填入一個符合自己條件的能力
+		li(class="list-group-item")
+			b 「蟲」之【蟲能力】：
+			ul
+				li 設計一個「特殊能力」，或從「表：特殊能力」中，選擇並填入一個能力
+				li 依據「特殊能力」設計該能力的「應用」，各種「應用」的「最大距離」與「預期效果」由玩家自行決定，並由GM決定實際效果與「消耗等級」
+				li 「特殊能力」的「應用」若有兩種以上，其「消耗等級」可能會不同。建議最多填寫4個「應用」。
+
+div(class="panel panel-primary")
+	div(class="panel-heading"): b 【表現屬性】的描述：
+	div(class="panel-body")
+		ul
+			li 力量，代表著角色對於肉身的所能發揮出的最大功率。
+			li 靈敏，代表著角色掌控身體進行精巧動作的能力。
+			li 慧黠，代表著角色對周遭環境的靈敏度，及查覺氣氛的警覺心。
+			li 穩重，代表角色對於突發狀況或重大事件的處理能力。
+			li 社交，代表角色的給人的印象、交談互動、掌握社會交際的能力程度。
+</div>	
+	
+	</div>
+</body>
+</html>
