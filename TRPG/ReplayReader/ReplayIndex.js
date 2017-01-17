@@ -9,6 +9,7 @@ var ReplayIndex = {
 			"朧"			: "#009900",
 
 			"GM"			: "#9900ff",
+		},
 		Docs: [
 			{title:"2016.08.30-啟程", 	url:"SF-0.txt"},
 //			{title:"2016.07.11-阿紅復出", 	url:"DoP-1.txt"},
