@@ -1,8 +1,7 @@
 var ReplayIndex = {
 
 	"DND-SF": {
-		TITLE: "【DND5E】恆水卞的奇妙冒險：蛛語之森
-		",
+		TITLE: "【DND5E】恆水卞的奇妙冒險：蛛語之森",
 		ROUTE: "DND5e_SpiderForest/",
 		ColorScheme: {
 			"梨默"			: "#000000",
