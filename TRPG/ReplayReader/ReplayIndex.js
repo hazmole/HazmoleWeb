@@ -12,12 +12,12 @@ var ReplayIndex = {
 		},
 		Docs: [
 			{title:"2016.08.30-啟程", 	url:"SF-0.txt"},
-//			{title:"2016.07.11-阿紅復出", 	url:"DoP-1.txt"},
-//			{title:"2016.07.12-初入朱紅大宅", 		url:"DoP-2.txt"},
-//			{title:"2016.07.14-第二日於朱紅大宅", 	url:"DoP-3.txt"},
-//			{title:"2016.07.25-第三日的調查", 		url:"DoP-4.txt"},
-//			{title:"2016.07.27-儲藏室的死鬥", 		url:"DoP-5.txt"},
-//			{title:"2016.07.31-各自的結局", 		url:"DoP-6.txt"},
+//			{title:"2016.07.11-阿紅復出", 	url:"SF-1.txt"},
+//			{title:"2016.07.12-初入朱紅大宅", 		url:"SF-2.txt"},
+//			{title:"2016.07.14-第二日於朱紅大宅", 	url:"SF-3.txt"},
+//			{title:"2016.07.25-第三日的調查", 		url:"SF-4.txt"},
+//			{title:"2016.07.27-儲藏室的死鬥", 		url:"SF-5.txt"},
+//			{title:"2016.07.31-各自的結局", 		url:"SF-6.txt"},
 		]
 	},
 
