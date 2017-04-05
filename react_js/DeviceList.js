@@ -82,7 +82,7 @@ class DeviceList extends React.Component {
             <div id="Navigator">{listItems}</div>
           </div>
           <div className="col-md-10">
-            //<DeviceNav data-sel_type={this.state.selected_type} data-sel_id={this.state.selected_id} />
+            
           </div>
         </div>
       );
