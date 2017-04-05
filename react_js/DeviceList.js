@@ -88,3 +88,4 @@ class DeviceList extends React.Component {
       );
   }
 }
+ReactDOM.render(<DeviceList />, document.getElementById('Main'));
