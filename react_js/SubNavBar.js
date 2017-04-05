@@ -28,5 +28,3 @@ class DeviceNav extends React.Component {
       );
   }
 }
-
-ReactDOM.render(<DeviceNav />, document.getElementById('SubNavigator'));

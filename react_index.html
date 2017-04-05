@@ -29,16 +29,16 @@
     </style>
   </head>
   <body>
-    <div id="example"></div>
-
     <!--TopBar-->
-    <div class="row">
+    <div id="TopBar" class="row">
       <div class="col-md-12" style="border:black solid 2px;">
         <b style="background:gray;">Arcadyan</b>　Welcome Username　<button>Logout</button>
       </div>
     </div>
 
-    <!--Content-->
+    <!--Main-->
+    <div id="Main" class="row"></div>
+<!--
     <div class="row">
       <div class="col-md-2">
         <div id="Navigator">A</div>
@@ -48,14 +48,16 @@
         <div id="Content">C</div>
       </div>
     </div>
-
+-->
 
 
     <!--React Script-->
-
-    <script type="text/babel" src="./react_js/DeviceList.js"></script>
+    <script type="text/babel" src="./react_js/Content.js"></script>
     <script type="text/babel" src="./react_js/SubNavBar.js"></script>
-
+    <script type="text/babel" src="./react_js/DeviceList.js"></script>
+    <script type="text/babel">
+      ReactDOM.render(<DeviceList />, document.getElementById('Main'));
+    </script>
 
   </body>
 </html>
