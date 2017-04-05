@@ -22,6 +22,7 @@ class DeviceList extends React.Component {
         <a href="#" className="list-group-item" onClick={this.print.bind(null,group)}>{group}</a>
       );
       return (
+        <div className="DeviceList">
           <div className="col-md-2">
             <div className="list-group">
               {listItems}
@@ -30,6 +31,7 @@ class DeviceList extends React.Component {
           <div className="col-md-10">
             <DeviceNav />
           </div>
+        </div>
       );
   }
 }
