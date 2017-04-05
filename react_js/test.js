@@ -1,3 +1,8 @@
+React.renderComponent(
+  <h1>Hello, world!</h1>,
+  document.getElementById('example')
+);
+/*
 class DeviceList extends React.Component {
   constructor(props) {
     super(props);
@@ -31,3 +36,4 @@ class DeviceList extends React.Component {
 }
 
 ReactDOM.render(<DeviceList />, document.getElementById('Navigator'));
+*/
