@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello React</title>
+    <!--Jquery-->
+    <script src="jquery/jquery-1.11.3.min.js"></script>
+    <!--Bootstrap-->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <!--React.js-->
+    <script src="./react_lib/react.min.js"></script>
+    <script src="./react_lib/react-dom.min.js"></script>
+    <script src="./react_lib/babel.min.js"></script>
+    <!--CSS-->
+    <style>
+    #Navigator{
+      background:#86c3ec;
+      border : solid 2px black;
+    }
+    #SubNavigator{
+      background:#c1e0f5;
+      height: 60px;
+    }
+    #Content{
+      background:#d8fccc;
+      height: 800px;
+    }
+    </style>
+  </head>
+  <body>
+    <!--TopBar-->
+    <div class="row">
+      <div class="col-md-12" style="border:black solid 2px;">
+        <b style="background:gray;">Arcadyan</b>　Welcome Username　<button>Logout</button>
+      </div>
+    </div>
+
+    <!--Content-->
+    <div class="row">
+      <div class="col-md-2">
+        <div id="Navigator">A</div>
+      </div>
+      <div class="col-md-10">
+        <div id="SubNavigator">B</div>
+        <div id="Content">C</div>
+      </div>
+    </div>
+
+    <!--React Script-->
+    <script type="text/jsx" src="./react_js/DeviceList.jsx"></script>
+    <script type="text/jsx" src="./react_js/SubNavBar.jsx"></script>
+
+
+  </body>
+</html>
