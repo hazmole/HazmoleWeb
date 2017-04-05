@@ -1,9 +1,13 @@
+
+// 2017.04.06 - Hazmole modified
+//===================================
+// Content
+//===================================
 class MainContent extends React.Component {
   /* Constructor */
   constructor(props) {
     // Set Props
     super(props);
-    ;
   }
 
   /* UI Display */
