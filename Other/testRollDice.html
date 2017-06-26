@@ -183,11 +183,14 @@ function hazrd_createDiceSet( sign, dice_expression){
 	var match_result = dice_expression.match(regex);
 	if(match_result==null)	return null;
 
+	var number = parseInt(match_result[1]);
+	var dice   = parseInt(match_result[3]);
+
 	return {
 		"sign" : sign,
 		"type"  : 1,
-		"number": parseInt(match_result[1]),
-		"dice":   parseInt(match_result[3]),
+		"number": ((number>20)? 30: number),
+		"dice":   ((dice>100)? 100: dice),
 		"special": match_result[2][0]
 	};
 }

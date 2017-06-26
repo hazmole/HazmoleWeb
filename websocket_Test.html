@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html>
+   <head>
+	
+      <script type="text/javascript">
+         var ws;
+
+         function isWebSoketWork(){
+            return ("WebSocket" in window); 
+         }
+
+         function createWebSocket() {
+            if (!isWebSoketWork()){
+               print("WebSocket is not supported by your Browser!");
+               return -1;
+            }
+            ws = new WebSocket("ws://ec2-13-59-113-71.us-east-2.compute.amazonaws.com:8001");
+            // Let us open a web socket
+            ws.onopen = function() {
+               // Web Socket is connected, send data using send()
+               print("==start Connection=="); 
+            };
+			
+            ws.onmessage = function (evt) { 
+               var received_msg = evt.data;
+               parseMessages(received_msg);
+               //print("[received message] " + received_msg);
+            };
+			
+            ws.onclose = function() { 
+               // websocket is closed.
+               print("==Connection is closed=="); 
+            };
+         }
+
+
+         function parseMessages(data){
+            var json_data = JSON.parse(data);
+            var output_text = "";
+            if(Array.isArray(json_data)){
+               for(var i=0;i<json_data.length;i++){
+                  output_text += parseMessage(json_data[i]);
+               }
+            }
+            else{
+               output_text += parseMessage(json_data);
+            }
+
+            output(output_text);
+         }
+         function parseMessage(message){
+            var str = "";
+            var avatar = (message.avatar==null)? "https://discordapp.com/assets/6debd47ed13483642cf09e832ed0bc1b.png": message.avatar;
+            str += "<span><img class='avatar' src='"+avatar+"'/></span>";
+            str += "<b class='user'>" + message.username+" </b>：<span> "+message.content+" </span>";
+            return "<div class='haz_message'>" + str + "</div>";
+         }
+
+         function say(){
+            var user = document.getElementById("user").value;
+            var content = document.getElementById("content").value;
+
+            if(user=="") user="遊客";
+
+            var msg = {"type":"custom_message","username":user, "content":content};
+
+            ws.send(JSON.stringify(msg));
+         }
+
+         function output(text){
+            document.getElementById("container").innerHTML += text;
+         }
+         function print(text){
+            document.getElementById("output").innerHTML += text+"</br>";
+         }
+         function test(){
+            createWebSocket();
+         }
+      </script>
+		<style>
+.haz_message {
+   border: 1px solid grey;
+   display:flex;
+   align-items:center;
+   color: hsla(0,0%,100%,.7);
+}
+.haz_message .avatar{
+   height: 30px;
+   width: 30px;
+   border-radius: 15px;
+   padding: 3px;
+}
+.haz_message .user{
+   font-weight: bold;
+}
+.haz_message img{
+   max-width: 100px;
+   max-height: 100px;
+}
+      </style>
+   </head>
+   <body>
+   
+      <div id="sse">
+         <a href="javascript:test()">Run WebSocket</a><br/>
+      </div>
+      
+      <!-- display -->
+      <button onclick="say()">送出</button>
+      <input id="user"    type="text" placeholder="使用者"   style="width:100px;"/>：
+      <input id="content" type="text" placeholder="說點什麼" style="width:400px;"/>
+      <div id="container" style="background: #36393e; border: 2px black solid; height:500px;overflow-y:auto;"></div>
+
+      <div id="output" style="border: 2px blue solid;"></div>
+   </body>
+</html>
