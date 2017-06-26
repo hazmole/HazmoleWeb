@@ -14,7 +14,7 @@
                print("WebSocket is not supported by your Browser!");
                return -1;
             }
-            ws = new WebSocket("wss://ec2-13-59-113-71.us-east-2.compute.amazonaws.com:8001");
+            ws = new WebSocket("wss://hazmoleaws.ddns.net:8001");
             // Let us open a web socket
             ws.onopen = function() {
                // Web Socket is connected, send data using send()
@@ -51,7 +51,7 @@
          function parseMessage(message){
             var str = "";
             var avatar = (message.avatar==null)? "https://discordapp.com/assets/6debd47ed13483642cf09e832ed0bc1b.png": message.avatar;
-            str += "<span><a href='javascript:mention("+message.user_id+")'><img class='avatar' src='"+avatar+"'/></a></span>";
+            str += "<span><a href='javascript:mention(\""+message.user_id+"\")'><img class='avatar' src='"+avatar+"'/></a></span>";
             str += "<b class='user'>" + message.username+" </b>：<span> "+message.content+" </span>";
             return "<div class='haz_message'>" + str + "</div>";
          }
@@ -80,6 +80,9 @@
 
          }
 
+         function mention(id){
+            document.getElementById("content").value += "<@"+id+"> ";
+         }
          function output(text){
             document.getElementById("container").innerHTML += text;
          }
