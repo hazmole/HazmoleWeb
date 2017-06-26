@@ -67,6 +67,19 @@
             ws.send(JSON.stringify(msg));
          }
 
+         function initial(){
+            createWebSocket();
+
+            document.getElementById("content")
+                .addEventListener("keyup", function(event) {
+                event.preventDefault();
+                if (event.keyCode == 13) {
+                    document.getElementById("tansmit").click();
+                }
+            });
+
+         }
+
          function output(text){
             document.getElementById("container").innerHTML += text;
          }
@@ -99,14 +112,10 @@
 }
       </style>
    </head>
-   <body>
-   
-      <div id="sse">
-         <a href="javascript:test()">Run WebSocket</a><br/>
-      </div>
+   <body onload="initial()">
       
       <!-- display -->
-      <button onclick="say()">送出</button>
+      <button id="tansmit" onclick="say()">送出</button>
       <input id="user"    type="text" placeholder="使用者"   style="width:100px;"/>：
       <input id="content" type="text" placeholder="說點什麼" style="width:400px;"/>
       <div id="container" style="background: #36393e; border: 2px black solid; height:500px;overflow-y:auto;"></div>
