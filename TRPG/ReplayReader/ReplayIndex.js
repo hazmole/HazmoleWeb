@@ -15,7 +15,7 @@ var ReplayIndex = {
 			{title:"2016.08.30-啟程", 	url:"SF-0.txt"},
 			{title:"2016.08.19-小東西與蜘蛛森林", 	url:"SF-1.txt"},
 			{title:"2016.09.19-蜘蛛牧場", 			url:"SF-2.txt"},
-//			{title:"2016.09.24-蜘蛛牧場與戰鬥", 	url:"SF-3.txt"},
+			{title:"2016.09.24-蜘蛛牧場與戰鬥", 	url:"SF-3.txt"},
 //			{title:"2016.10.01-黑龍術士與魔劍", 	url:"SF-4.txt"},
 //			{title:"2016.10.05-死鬥與被遺棄之劍", 	url:"SF-5.txt"},
 //			{title:"2016.10.12-蜘蛛王之巢", 		url:"SF-6.txt"},
