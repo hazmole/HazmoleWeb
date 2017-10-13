@@ -1,0 +1,98 @@
+﻿<html>
+<head>
+	<title>邪神梭哈</title>
+	<meta name="Author" content="Hazmole">
+	<meta http-equiv="Content-Type" content="text/html" ;="" charset="UTF-8">
+	<meta http-equiv="Content-Language" content="zh-TW">
+	<link rel="shortcut icon" href="../../img/hz_icon.ico">
+	
+	<!--Jquery-->
+	<script src="../../jquery/jquery-1.11.3.min.js"></script>
+	<!--Bootstrap-->
+	<script src="../../bootstrap/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+	<!--NavBar-->
+	<script src="../../js/CreateNavBar.js"></script>
+
+	<!--Custom-->
+	<script src="./CthulhuShowhand.js"></script>
+	<script>
+function initial(){
+	setMainPanel("main_block");
+	Scene_Start();
+}
+	</script>
+	<style>
+		div {
+			border-radius:5px;
+		}
+		#main_block {
+			position: absolute;
+
+			width:780px;
+			height:460px;
+			left: 50%;
+			margin-left: -390px;
+
+			border: 10px #cccccc solid;
+			background:#dedede;
+			text-align:left;
+
+		}
+		#button_start {
+			position: absolute;
+
+			width: 200px;
+			height:40px;
+			left: 50%;
+			margin-left: -100px;
+
+			font-size: 20px;
+		}
+		.abs {
+			position: absolute;
+		}
+		.CenterRow {
+			width: 700px;
+			margin-left: -350px;
+			left: 50%;
+			text-align:center;
+		}
+		.mouseOn {
+			cursor: pointer;
+		}
+		card {
+			position: absolute;
+			width: 90px;
+			height: 120px;
+			background: white;
+			margin: 5px;
+			border: 2px solid #999;
+			text-align: center;
+			padding-top: 24px;
+			font-size: 48px;
+		}
+		.red { color:red;}
+		.card_back {
+			padding-top: 0px;
+		}
+	</style>
+</head>
+<body onLoad="initial()">
+	<center>
+	<!--標題-->
+	<h3><strong>邪神梭哈</strong></h3>
+	
+	<!--主遊戲區塊-->
+	<div id="main_block">
+		
+	</div>
+	<div style="height:460px;"></div>	<!--填空區塊-->
+	
+	
+
+	<hr>
+	Author: Hazmole 	Version:0.00 <br>
+	</center>
+</body>
+</html>
