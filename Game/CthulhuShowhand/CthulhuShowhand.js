@@ -11,6 +11,7 @@ var Player_Point;
 var Opponent_Point;
 var Pool;
 
+var VERSION = 1;
 var Die_Times = 0;
 var Achievements = [0,0,0,0,0,0,0];
 
@@ -20,6 +21,7 @@ function setMainPanel(id){
 	MAIN_PANEL = document.getElementById(id);
 }
 function save(){
+	localStorage.setItem("VERSION", VERSION);
 	localStorage.setItem("Player_Point", Player_Point);
 	localStorage.setItem("Die_Times", Die_Times);
 	localStorage.setItem("Achievements", Achievements);
@@ -32,6 +34,9 @@ function load(){
 	if(Die_Times   ==null) 	Die_Times = 0;
 	if(Achievements==null) 	Achievements = [0,0,0,0,0,0,0];
 	else					Achievements = (Achievements.split(","));
+
+	var version = VERSION;
+	if(version>localStorage.getItem("VERSION"))		Achievements[5]=0;
 }
 
 //====================
@@ -45,7 +50,7 @@ function Scene_Select(){
 		Player_Point = 200; 
 		Die_Times ++;
 		save();
-		buildPage(["你輸了，請重新整理此頁面以重新開始。"]);
+		buildPage_Lost();
 	}
 	else{
 		Opponent_Point = 50;
@@ -163,9 +168,9 @@ function opponent_decision(val){
 	}	
 }
 function cast(){
-	console.log("Opponent ID:", Opponent_Id);
+	var is_cast = 1;
 	switch(Opponent_Id){
-		case 0: Cast_Azatoth(); 	break;
+		case 0: is_cast = Cast_Azatoth(); 	break;
 		case 1: Cast_Nyarlathotep();break;
 		case 2: Cast_Yog();			break;
 		case 3: Cast_Shub();		break;
@@ -173,7 +178,8 @@ function cast(){
 		case 5: Cast_Hastur();		break;
 		case 6: Cast_Cthugha(); 	break; 
 	}
-	game_log("邪神似乎使用了某種無以名狀的權能……");
+	if(is_cast)	game_log("邪神似乎使用了某種無以名狀的權能……");
+	else		game_log("邪神似乎在發呆……");
 	game_panel_update("<button class=\"btn btn-default\" onClick=\"show_result()\">開牌！</button>");
 }
 function show_result(){
@@ -407,6 +413,14 @@ function bulidPage_OpponentSelect(){
 	html[j++] = "<div class=\"abs CenterRow\" style=\"top:60px;\">\
 					<center><div style=\"width:500px;height:220px;background:#aaa;\">"+temp+"<div></center>\
 				</div>";
+	html[j++] = "<div class=\"abs\"\ style=\"width:100px;height:120px;background:#fff;top:160px;left:20px;\">\
+					<div class=\"abs\"\ style=\"background:#a95050;width:100px;text-align:center;\"><h4>死亡次數</h4></div>\
+					<div class=\"abs\"\ style=\"width:100px;margin-left:-50px;left:50%;top:50px;font-size:28px;text-align:center;\">"+Die_Times+"</div>\
+				</div>";
+	html[j++] = "<div class=\"abs\"\ style=\"width:100px;height:120px;background:#fff;top:160px;right:20px;\">\
+					<div class=\"abs\"\ style=\"background:#abc8ed;width:100px;text-align:center;\"><h4>持有籌碼</h4></div>\
+					<div class=\"abs\"\ style=\"width:100px;margin-left:-50px;left:50%;top:50px;font-size:28px;text-align:center;\">"+Player_Point+"</div>\
+				</div>";
 	buildPage(html);
 }
 function buildPage_MainGame(){
@@ -439,6 +453,17 @@ function buildPage_MainGame(){
 	html[j++] = "<div id=\"interact_panel\" class=\"abs CenterRow\" style=\"top:240px;\">XXX</div>";
 	buildPage(html);
 }
+function buildPage_Lost(){
+	var html = [],j=0;
+
+	html[j++] = "<button id=\"button_start\" class=\"btn btn-default\" style=\"top:260px;\" onClick=\"Scene_Select();\">重新開始遊戲</button>";
+	html[j++] = "<div id=\"description\" class=\"abs CenterRow\" \
+					style=\"top:40px;height:200px;background:black;color:white;padding:5px;font-size:18px;\">\
+						你徹底的輸了……<br/>在邪神的權能下，凡人終究只能無力的倒下……<br/><br/>不，真的是這樣嗎？\
+				</div>";
+
+	buildPage(html);
+}
 function buildPage(html_arr){
 	MAIN_PANEL.innerHTML = "";
 	for(var i=0;i<html_arr.length;i++){
@@ -460,6 +485,8 @@ function displayOpponentContent(id){
 //===========================
 // AI Cast
 function Cast_Azatoth(){	// 必定獲勝
+	if(randInt(20)==0)	return 0;
+
 	for(var i=0;i<5;i++)
 		game_change_card("opponent", i, {"symbo":5, "number":13});
 	return 1;
@@ -506,7 +533,6 @@ function Cast_Nyarlathotep(){	// 跟玩家交換一張牌
 			}
 		}
 	}
-	console.log(best_choice.target_idx, best_choice.self_idx);
 	if(best_choice.target_idx!=0){
 		var temp_card = Hands[0][best_choice.self_idx];
 		game_change_card("opponent", best_choice.self_idx, 	 Hands[1][best_choice.target_idx]);
@@ -526,25 +552,32 @@ function Cast_Cthulhu(){	// ４張即成順子
 	return 1;
 }
 function Cast_Hastur(){		// 選擇玩家一張牌並降低其數字２點
-	var best_choice = {"target_idx":0, "new_card": null, "cost": guessCardsCost(Hands[1]) };
-	console.log("ori_cost",best_choice.cost);
+	var best_choice = {"target_idx":0, "target_idx_2":0, "cost": guessCardsCost(Hands[1]) };
 	// Predict & Simulation
 	for(var i=1;i<=4;i++){
-		var temp_hands = Hands[1].slice(0);
-		for(var j=2;j<=3;j++){
-			temp_hands[i] = {"symbo":Hands[1][i].symbo, "number":Hands[1][i].number-j};
+		for(var j=1;j<=4;j++){
+			var temp_hands = Hands[1].slice(0);
+			temp_hands[i] = {"symbo":Hands[1][i].symbo, "number":Hands[1][i].number-1};
+			temp_hands[j] = {"symbo":Hands[1][j].symbo, "number":Hands[1][j].number-1};
+
 			var cost = guessCardsCost(temp_hands);
 			if(cost<=best_choice.cost){
-
-				best_choice.target_idx = i;
-				best_choice.new_card   = temp_hands[i];
+				best_choice.target_idx   = i;
+				best_choice.target_idx_2 = j;
 				best_choice.cost       = cost;
 			}
 		}
 	}
-	console.log(best_choice.cost);
 	if(best_choice.target_idx!=0){
-		game_change_card("player", best_choice.target_idx, best_choice.new_card);
+		var new_card;
+		new_card = Hands[1][best_choice.target_idx];
+		new_card.number-=1;
+		game_change_card("player", best_choice.target_idx, new_card);
+
+		new_card = Hands[1][best_choice.target_idx_2];
+		new_card.number-=1;
+		game_change_card("player", best_choice.target_idx_2, new_card);
+		
 		return 1;
 	}
 	return 0;
