@@ -287,7 +287,7 @@ function getCardsCost(ori_cards){
 	symbo_count[cards[0].symbo]++;
 	for(var i=1;i<len;i++){
 		symbo_count[cards[i].symbo]++;
-		if( cards[i].symbo == symbo_count.indexOf(Math.max(...symbo_count)) ) symbo_tb = i;
+		if(cards[i].symbo == symbo_count.indexOf(Math.max(...symbo_count)) ) symbo_tb = i;
 		if(cards[i].number-cards[i-1].number==1){	snake_count++; snake_tb=Math.max(snake_tb, getTiebreaker( cards[i] ) ); }
 		else if(cards[i].number-cards[i-1].number>1 && snake_count<4){snake_count=0;snake_tb=0;}
 
