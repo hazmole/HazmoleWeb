@@ -11,10 +11,13 @@ function Downloader(){
 // :: Download
 	Downloader.downloadFile = function(title, url){
 		var aLink = document.createElement('a');
-		var evt = document.createEvent("HTMLEvents");
+		var evt = new MouseEvent('click', {
+		    'view': window,
+		    'bubbles': true,
+		    'cancelable': true
+		  });
 		
-		evt.initEvent("click", false, false);//initEvent 不加后两个参数在FF下会报错, 感谢 Barret Lee 的反馈
-		
+
 		aLink.download = title;
 		aLink.href = url;
 		aLink.dispatchEvent(evt);
