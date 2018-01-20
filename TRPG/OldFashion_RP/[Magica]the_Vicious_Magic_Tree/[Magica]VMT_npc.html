@@ -1,0 +1,49 @@
+﻿<html>
+<head>
+	<title>【魔道書大戰】茁壯的惡意魔樹-NPC角色資訊</title>
+	<link rel=stylesheet type="text/css" href="../css/RPstyle.css">
+	<link rel=stylesheet type="text/css" href="../css/TDstyle.css">
+	<link rel="shortcut icon" href="../icon.ico">
+	<script src="../js/Index_info.js"></script>
+	<script src="../js/IndexHandler.js"></script>
+	<script src="../js/magica_patch/magica_NameDefine.js"></script>
+	<script src="../js/magica_patch/magica_table_builder.js"></script>
+	<script src="npc_info.js"></script>
+	<script>
+		function initialize(){
+			document.getElementById("title").innerHTML = "<font style='font-size:20px;'><b>"+document.title+"</b></font>";
+			buildLeftBlock();
+			
+			buildNpcTable("word-1");
+		}
+	</script>
+	
+</head>
+<body onload="initialize();">
+	<center>
+	<table width="1300px" border=0>
+	<tr>
+		<td id="left_block" width="300px" style="vertical-align:top;">
+		</td>
+		<td id="main_block">
+			<!--標題位置-->
+			<div class="RP_outer_div">
+				<div id="title" class="RP_div"></div>
+				<li style="position:relative;left:20px;top:3px;"><a href="[top_doc][Magica]the_Vicious_Magic_Tree.html">回上層</a>
+			</div>
+			<p>
+			
+			<!--團務資訊-->
+			<div class="RP_outer_div">
+				<div id="word-1" class="RP_div">
+				
+				</div>
+			</div>
+			
+		</td>
+	</table>
+	
+	
+	
+</body>
+</html>

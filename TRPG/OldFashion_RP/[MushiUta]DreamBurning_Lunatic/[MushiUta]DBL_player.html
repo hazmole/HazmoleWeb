@@ -1,0 +1,104 @@
+﻿<html>
+<head>
+	<title>【蟲鳴之時】焚夢的狂人-玩家角色資訊</title>
+	<link rel=stylesheet type="text/css" href="../css/RPstyle.css">
+	<link rel=stylesheet type="text/css" href="../css/TDstyle.css">
+	<link rel="shortcut icon" href="../icon.ico">
+	<script src="../js/Index_info.js"></script>
+	<script src="../js/IndexHandler.js"></script>
+	<script src="character_info.js"></script>
+	<script>
+		function initialize(){
+			document.getElementById("title").innerHTML = "<font style='font-size:20px;'><b>"+document.title+"</b></font>";
+			buildLeftBlock();
+			
+			buildDetailTable("info-1");
+			buildDetailTable("info-2");
+			buildDetailTable("info-3");
+			buildDetailTable("info-4");
+		}
+	</script>
+	
+</head>
+<body onload="initialize();">
+	<center>
+	<table width="1300px" border=0>
+	<tr>
+		<td id="left_block" width="300px" style="vertical-align:top;">
+		</td>
+		<td id="main_block">
+			<!--標題位置-->
+			<div class="RP_outer_div">
+				<div id="title" class="RP_div"></div>
+				<li style="position:relative;left:20px;top:3px;"><a href="[top_doc][MushiUta]DreamBurning_Lunatic.html">回上層</a>
+			</div>
+			<p>
+			
+			<!--團務資訊-->
+			<div class="RP_outer_div">
+				<div id="word-1" class="RP_div">
+				
+				<!--布拉格-->
+				<table border=0>
+					<tr><td rowspan=7 width=100px><img src=image/head_01.png>
+					<tr><td width=60px>	<td width=60px><td width=60px><td width=60px><td width=60px><td width=80px><td width=60px><td width=60px>
+					<tr><th class="TD_GG">姓名		<td colspan=3>布拉格（藍岈諾）					<th class="TD_GB" colspan=4>「蟲」
+					<tr><th class="TD_GG">玩家		<td colspan=3>藍刺蝟							<th class="TD_GB">名稱		<td colspan=3>Holleworm 穴居王-荷里
+					<tr><th class="TD_GG">性別		<td>男		<th class="TD_GG">年齡	<td>17歲	<th class="TD_GB">蟲種		<td>蚯蚓	<th class="TD_GB">類別		<td>特殊型
+					<tr><th class="TD_GG">職業		<td colspan=3>打工狂人、學生					<th class="TD_GB">能力		<td colspan=3>影洞(6)
+					<tr><th class="TD_GG">特技		<td colspan=3 width=220px>激躁(3)、飛鏢術(2)
+						<td colspan=4 style="text-align:center;"><input type=button value="展開詳細資訊" onclick="switchDisplay('info-1')">
+				</table>
+				<div id="info-1" style="display:none;"></div>
+				
+				<hr style="width:100%;">
+				<!--薇洛妮卡-->
+				<table border=0>
+					<tr><td rowspan=7 width=100px><img src=image/head_02.jpg>
+					<tr><td width=60px>	<td width=60px><td width=60px><td width=60px><td width=60px><td width=80px><td width=60px><td width=60px>
+					<tr><th class="TD_GG">姓名		<td colspan=3>薇洛妮卡(Veronica)				<th class="TD_GB" colspan=4>「蟲」
+					<tr><th class="TD_GG">玩家		<td colspan=3>Artis								<th class="TD_GB">名稱		<td colspan=3>鏵蝶
+					<tr><th class="TD_GG">性別		<td>女		<th class="TD_GG">年齡	<td>20歲	<th class="TD_GB">蟲種		<td>赤紅大王蝶	<th class="TD_GB">類別		<td>同化型
+					<tr><th class="TD_GG">職業		<td colspan=3>大學生							<th class="TD_GB">能力		<td colspan=3>血腥綻放(3)
+					<tr><th class="TD_GG">特技		<td colspan=3 width=220px>防狼體術(3)、魅惑(2)
+						<td colspan=4 style="text-align:center;"><input type=button value="展開詳細資訊" onclick="switchDisplay('info-2')">
+				</table>
+				<div id="info-2" style="display:none;"></div>
+				
+				<hr style="width:100%;">
+				<!--徐麒峰-->
+				<table border=0>
+					<tr><td rowspan=7 width=100px><img src=image/head_03.jpg>
+					<tr><td width=60px>	<td width=60px><td width=60px><td width=60px><td width=60px><td width=80px><td width=60px><td width=60px>
+					<tr><th class="TD_GG">姓名		<td colspan=3>徐麒峰							<th class="TD_GB" colspan=4>「蟲」
+					<tr><th class="TD_GG">玩家		<td colspan=3>薩托里							<th class="TD_GB">名稱		<td colspan=3>夢蝶
+					<tr><th class="TD_GG">性別		<td>男		<th class="TD_GG">年齡	<td>19歲	<th class="TD_GB">蟲種		<td>彩裳蜻蜓	<th class="TD_GB">類別		<td>特殊型
+					<tr><th class="TD_GG">職業		<td colspan=3>大學生							<th class="TD_GB">能力		<td colspan=3>曉夢(5)
+					<tr><th class="TD_GG">特技		<td colspan=3 width=220px>博識(2)、強記(3)
+						<td colspan=4 style="text-align:center;"><input type=button value="展開詳細資訊" onclick="switchDisplay('info-3')">
+				</table>
+				<div id="info-3" style="display:none;"></div>
+				
+				<hr style="width:100%;">
+				<!--夏-->
+				<table border=0>
+					<tr><td rowspan=7 width=100px><img src=image/head_04.png>
+					<tr><td width=60px>	<td width=60px><td width=60px><td width=60px><td width=60px><td width=80px><td width=60px><td width=60px>
+					<tr><th class="TD_GG">姓名		<td colspan=3>夏								<th class="TD_GB" colspan=4>「蟲」
+					<tr><th class="TD_GG">玩家		<td colspan=3>木骨								<th class="TD_GB">名稱		<td colspan=3>極樂
+					<tr><th class="TD_GG">性別		<td>男		<th class="TD_GG">年齡	<td>24歲	<th class="TD_GB">蟲種		<td>蟠腦蟲	<th class="TD_GB">類別		<td>特殊型
+					<tr><th class="TD_GG">職業		<td colspan=3>無								<th class="TD_GB">能力		<td colspan=3>嚼(1)、群龍蟠首(7)
+					<tr><th class="TD_GG">特技		<td colspan=3 width=220px>理解(2)、柔術(3)
+						<td colspan=4 style="text-align:center;"><input type=button value="展開詳細資訊" onclick="switchDisplay('info-4')">
+				</table>
+				<div id="info-4" style="display:none;"></div>
+				</div>
+			</div>
+			
+		</td>
+	</table>
+	
+	
+	
+</body>
+</html>
