@@ -54,15 +54,3 @@ temp[1] = Array();
 	temp[1][8] = ["[團錄]2014.02.18 高潮之戰",				path+"[Magica]VMT_6.html"];
 	temp[1][9] = ["[團錄]2014.02.23 義務",					path+"[Magica]VMT_7.html"];
 	temp[1][10]= ["[團錄]2014.02.26 尾聲",					path+"[Magica]VMT_8.html"];
-//======================
-Index_info[2] = Array();
-temp = Index_info[2];
-path = "../[Magica]Dolls_House/";
-temp[0] = ["【魔道書大戰】魔偶之館",path+"[top_doc][Magica]Dolls_House.html"];
-temp[1] = Array();
-var c = 0;
-	temp[1][c++] = ["玩家角色資訊",path+"[Magica]DH_player.html"];
-	temp[1][c++] = ["其他角色資訊",path+"[Magica]DH_npc.html"];
-	temp[1][c++] = ["[團錄]2015.04.06 試導入",	path+"[Magica]DH_0.html"];
-	temp[1][c++] = ["[團錄]2015.05.29 導入(上)",path+"[Magica]DH_1.html"];
-	temp[1][c++] = ["[團錄]2015.06.05 導入(下)&第一巡迴(上)",path+"[Magica]DH_2.html"];
