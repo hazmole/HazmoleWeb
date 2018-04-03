@@ -4,7 +4,7 @@
 	SETTING
 ==================*/
 var NAVBAR_SETTING = {
-	root: "https://hazmole.github.io/HazmoleWeb/",
+	root: "./",
 	main: new Navbar_obj("Hazattomole",	"index.html"),
 	tree: [
 		new Navbar_obj("TRPG規則",	[
@@ -68,7 +68,7 @@ function Navbar_obj(name, url, attr){
 ==================*/
 $(document).ready(function(){
 	var navbar_head = "";
-	navbar_head = "<div class='navbar-header>"
+	navbar_head = "<div class='navbar-header >"
 					+"<button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bs-example-navbar-collapse-1'>"
 						+"<span class='sr-only'>Toggle navigation</span>"
 						+"<span class='icon-bar'></span>"
@@ -86,7 +86,7 @@ $(document).ready(function(){
 						+navbar_body
 					+"</ul></div>";
 	
-	var navbar = "<div class='navbar navbar-inverse'><div class='container-fluid>" + navbar_head + navbar_body + "</div></div>";
+	var navbar = "<div class='navbar navbar-inverse' style='z-index:100;'><div class='container-fluid>" + navbar_head + navbar_body + "</div></div>";
 	$("body").prepend(navbar);
 });
 
