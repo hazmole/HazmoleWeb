@@ -4,7 +4,7 @@
 	SETTING
 ==================*/
 var NAVBAR_SETTING = {
-	root: "./",
+	root: "https://hazmole.github.io/HazmoleWeb/",
 	main: new Navbar_obj("Hazattomole",	"index.html"),
 	tree: [
 		new Navbar_obj("TRPG規則",	[
