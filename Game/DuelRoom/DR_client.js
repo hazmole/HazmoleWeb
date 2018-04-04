@@ -1,5 +1,6 @@
 
 function startScene(){
+	loadGoogle();
 	setScene("login");
 }
 
@@ -59,6 +60,15 @@ function setScene(scene_type){
 
 //=================
 // Google Login
+function loadGoogle(){
+	gapi.load('auth2', function(){
+		gapi.auth2.init({
+			client_id: '535690683952-ee1b89i0c954efmvilbc1rgomvhth0kb.apps.googleusercontent.com',
+			cookiepolicy: 'single_host_origin',
+		});
+		render_google_login_button("g_mysignin");
+	});
+}
 function onSignIn(googleUser) {
 	var id_token = googleUser.getAuthResponse().id_token;
 	build_LoginScene();
@@ -68,6 +78,7 @@ function signOut(){
 	build_LoginScene();
 }
 function isLogin(){
+
 	if(!gapi.auth2.getAuthInstance()) return false;
 	return gapi.auth2.getAuthInstance().isSignedIn.get();
 }
@@ -80,16 +91,11 @@ function getGoogleUserName(){
 	else			return "遊客";
 }
 function render_google_login_button(id){
-	$("#"+id).append('<div id="customBtn" class="customGPlusSignIn"><span class="icon"></span><span class="buttonText">Google</span></div>');
+	if(document.getElementById(id)) return;
 
-	gapi.load('auth2', function(){
-		var auth2 = gapi.auth2.init({
-			client_id: '535690683952-ee1b89i0c954efmvilbc1rgomvhth0kb.apps.googleusercontent.com',
-			cookiepolicy: 'single_host_origin',
-		});
-		var element = document.getElementById(id);
-		auth2.attachClickHandler(element, {},	onSignIn, function(error) {
-        	alert(JSON.stringify(error, undefined, 2));
-        });
-	});
+	$("#"+id).append('<div id="customBtn" class="customGPlusSignIn"><span class="icon"></span><span class="buttonText">Google</span></div>');
+	var element = document.getElementById(id);
+	gapi.auth2.getAuthInstance().attachClickHandler(element, {},	onSignIn, function(error) {
+    	alert(JSON.stringify(error, undefined, 2));
+    });
 }
