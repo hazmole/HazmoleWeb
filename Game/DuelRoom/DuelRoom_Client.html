@@ -22,27 +22,71 @@
 	<script src="./DR_client.js"></script>
 	<script>
 function initial(){
-	setMainPanel("main_block");
-	//setScene("login");
+	defineMainPanel("main_block");
+	startScene();
 }
 	</script>
 	<style>
 block{
 	position:absolute;
-	border: 1px solid black;
+//	border: 1px solid black;
 }
+
+
+
+hr{
+	border-top: 1px solid #484848;
+}
+banner{
+	width:300px;height:100%;background:#ccc;
+	position:absolute;border-top: 1px solid #484848;
+}
+invalidPanel{
+	width:180px;height:180px;margin-left:-90px;margin-top:30px;
+	padding:30px;
+	position:absolute;border: 1px solid black;
+}
+.func_panel{
+	width:250px;
+	height:300px;
+	padding: 20px;
+	border: solid 5px;
+	text-align: center;
+}
+.func_panel btitle{
+	font-size:20px;
+	font-weight: bold;
+}
+.func_panel .big_button{
+	padding: 30px;
+	font-size: 16px;
+	border: 7px gray outset;
+}
+.func_panel .big_button:active{	border-style: inset;}
+.gray_panel{		background: #cccccc; border-color: #aaa;}
+.blue_panel{		background: #9fb4f1; border-color: #7f95d6;}
+.blue_panel:hover{	background: #7f95d6;}
+.blue_panel .big_button{background: #4e4ece; color: white; border-color: #7f7fb1;}
+.red_panel{		background: #f19f9f; border-color: #e36d6d;}
+.red_panel:hover{	background: #e36d6d;}
+.red_panel .big_button{background: #b13c3c; color: white; border-color: #944c4c;}
+.green_panel{		background: #94d294; border-color: #7dbc7d;}
+.green_panel:hover{background: #7dbc7d;}
+.green_panel .big_button{background: #35861c; color: white; border-color: #738e70;}
+
 	</style>
 </head>
-<body>
+<body onload="initial()">
 <div id="main_block" style="width:100%;height:100%;margin-top:-72px;position:absolute;">
 
-	<block style="width:300px;height:100%;background:#ccc;"></block>
-	<block style="top:100px;left:350px;">
-		<div class="g-signin2" data-onsuccess="onSignIn"></div>
-		<b>請輸入房間名</b>：<input type="text"><input type="submit" value="進入">
-	</block>
-
-
+	
 </div>
 </body>
 </html>
+
+<!--
+
+<div class="g-signin2" data-onsuccess="onSignIn"></div>
+<a href="#" onclick="signOut();">Sign out</a>
+<b>請輸入房間名</b>：<input type="text"><input type="submit" value="進入">
+-->
