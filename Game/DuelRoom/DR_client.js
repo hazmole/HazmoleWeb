@@ -66,7 +66,7 @@ function loadGoogle(){
 			client_id: '535690683952-ee1b89i0c954efmvilbc1rgomvhth0kb.apps.googleusercontent.com',
 			cookiepolicy: 'single_host_origin',
 		});
-		render_google_login_button("g_mysignin");
+		//render_google_login_button("g_mysignin");
 	});
 }
 function onSignIn(googleUser) {
