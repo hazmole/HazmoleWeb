@@ -68,6 +68,7 @@ function loadGoogle(){
 		});
 		if (auth2.isSignedIn.get() == true) {
 			auth2.signIn();
+			console.log("already signed in");
 		}
 		setScene("login");
 	});
@@ -81,8 +82,7 @@ function signOut(){
 	build_LoginScene();
 }
 function isLogin(){
-
-	if(!gapi.auth2.getAuthInstance()) return false;
+	if(gapi.auth2.getAuthInstance()==null) return false;
 	return gapi.auth2.getAuthInstance().isSignedIn.get();
 }
 function getGoogleIdToken(){
