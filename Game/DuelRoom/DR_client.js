@@ -62,7 +62,7 @@ function setScene(scene_type){
 // Google Login
 function onSignIn(googleUser) {
 	var id_token = googleUser.getAuthResponse().id_token;
-	//
+	console.log("Sign in!");
 }
 function signOut(){
 	gapi.auth2.getAuthInstance().signOut();
