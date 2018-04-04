@@ -19,7 +19,7 @@ function build_LoginScene(){
 	update_LoginScene();
 }
 function update_LoginScene(){
-	if(isLogin())	$("#user_message").append("歡迎，"+getGoogleUserName()+'<br><a href="#" onclick="signOut();">Sign out</a>');
+	if(isLogin())	$("#user_message").append("歡迎，<b>"+getGoogleUserName()+'</b>　　<a href="#" onclick="signOut();">Sign out</a>');
 	else		{	$("#user_message").append('喔喔！你還沒有登入呢！<br><div id="g_mysignin" data-onsuccess="onSignIn"></div>');
 					render_google_login_button("g_mysignin");}
 	$("#deck_panel").addClass(isLogin()?"blue_panel":"gray_panel");
@@ -61,11 +61,11 @@ function setScene(scene_type){
 // Google Login
 function onSignIn(googleUser) {
 	var id_token = googleUser.getAuthResponse().id_token;
-	console.log("Sign in!");
 	build_LoginScene();
 }
 function signOut(){
 	gapi.auth2.getAuthInstance().signOut();
+	build_LoginScene();
 }
 function isLogin(){
 	if(!gapi.auth2.getAuthInstance()) return false;
