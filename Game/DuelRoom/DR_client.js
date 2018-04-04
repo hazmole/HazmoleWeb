@@ -68,6 +68,7 @@ function signOut(){
 	gapi.auth2.getAuthInstance().signOut();
 }
 function isLogin(){
+	if(!gapi.auth2.getAuthInstance()) return false;
 	return gapi.auth2.getAuthInstance().isSignedIn.get();
 }
 function getGoogleIdToken(){
