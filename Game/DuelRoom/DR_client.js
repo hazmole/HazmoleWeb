@@ -66,8 +66,6 @@ function loadGoogle(){
 			client_id: '535690683952-ee1b89i0c954efmvilbc1rgomvhth0kb.apps.googleusercontent.com',
 			cookiepolicy: 'single_host_origin',
 		});
-		auth2.isSignedIn.listen();
-		auth2.currentUser.listen();
 		if (auth2.isSignedIn.get() == true) {
 			auth2.signIn();
 		}
