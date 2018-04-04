@@ -76,8 +76,7 @@ function onSignIn(googleUser) {
 	build_LoginScene();
 }
 function signOut(){
-	gapi.auth2.getAuthInstance().signOut();
-	build_LoginScene();
+	gapi.auth2.getAuthInstance().signOut().then(build_LoginScene);
 }
 function isLogin(){
 	if(gapi.auth2.getAuthInstance()==null) return false;
