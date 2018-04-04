@@ -1,6 +1,6 @@
 
 function startScene(){
-	//setScene("login");
+	setScene("login");
 }
 
 //=================
