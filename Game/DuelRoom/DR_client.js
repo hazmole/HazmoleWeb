@@ -91,7 +91,7 @@ function getGoogleUserName(){
 	else			return "遊客";
 }
 function render_google_login_button(id){
-	if(document.getElementById(id)) return;
+	if(!document.getElementById(id)) return;
 
 	$("#"+id).append('<div id="customBtn" class="customGPlusSignIn"><span class="icon"></span><span class="buttonText">Google</span></div>');
 	var element = document.getElementById(id);
