@@ -6,7 +6,8 @@
 	<meta http-equiv="Content-Language" content="zh-TW">
 	<meta name="google-signin-client_id" content="535690683952-ee1b89i0c954efmvilbc1rgomvhth0kb.apps.googleusercontent.com">
 	<link rel="shortcut icon" href="../../img/hz_icon.ico">
-	
+	<link rel=stylesheet type="text/css" href="DR_client.css">
+
 	<!--Jquery-->
 	<script src="../../jquery/jquery-1.11.3.min.js"></script>
 	<!--Bootstrap-->
@@ -17,7 +18,7 @@
 
 	<!--Custom-->
 	<script src="../../js/MyCookie.js"></script>
-	<script src="https://apis.google.com/js/platform.js" async defer></script>
+	<script src="https://apis.google.com/js/api:client.js" async defer></script>
 
 	<script src="./DR_client.js"></script>
 	<script>
@@ -34,59 +35,11 @@ block{
 
 
 
-hr{
-	border-top: 1px solid #484848;
-}
-banner{
-	width:300px;height:100%;background:#ccc;
-	position:absolute;border-top: 1px solid #484848;
-}
-invalidPanel{
-	width:180px;height:180px;margin-left:-90px;margin-top:30px;
-	padding:30px;
-	position:absolute;border: 1px solid black;
-}
-.func_panel{
-	width:250px;
-	height:300px;
-	padding: 20px;
-	border: solid 5px;
-	text-align: center;
-}
-.func_panel btitle{
-	font-size:20px;
-	font-weight: bold;
-}
-.func_panel .big_button{
-	padding: 30px;
-	font-size: 16px;
-	border: 7px gray outset;
-}
-.func_panel .big_button:active{	border-style: inset;}
-.gray_panel{		background: #cccccc; border-color: #aaa;}
-.blue_panel{		background: #9fb4f1; border-color: #7f95d6;}
-.blue_panel:hover{	background: #7f95d6;}
-.blue_panel .big_button{background: #4e4ece; color: white; border-color: #7f7fb1;}
-.red_panel{		background: #f19f9f; border-color: #e36d6d;}
-.red_panel:hover{	background: #e36d6d;}
-.red_panel .big_button{background: #b13c3c; color: white; border-color: #944c4c;}
-.green_panel{		background: #94d294; border-color: #7dbc7d;}
-.green_panel:hover{background: #7dbc7d;}
-.green_panel .big_button{background: #35861c; color: white; border-color: #738e70;}
 
 	</style>
 </head>
 <body onload="initial()">
 <div id="main_block" style="width:100%;height:100%;margin-top:-72px;position:absolute;">
-
-	<div class="g-signin2" data-onsuccess="onSignIn"></div>
 </div>
 </body>
 </html>
-
-<!--
-
-<div class="g-signin2" data-onsuccess="onSignIn"></div>
-<a href="#" onclick="signOut();">Sign out</a>
-<b>請輸入房間名</b>：<input type="text"><input type="submit" value="進入">
--->

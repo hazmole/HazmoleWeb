@@ -1,6 +1,6 @@
 
 function startScene(){
-	setScene("login");
+	//setScene("login");
 }
 
 //=================
@@ -79,12 +79,15 @@ function getGoogleUserName(){
 	else			return "遊客";
 }
 function render_google_login_button(id){
-gapi.signin2.render(id, {
-		'scope': 'profile',
-		'width': 240,
-		'height': 50,
-		'longtitle': true,
-		'theme': 'dark',
-		'onsuccess': onSignIn,
+	$("#"+id).append('<span class="label">Sign in with:</span>');
+	$("#"+id).append('<div id="customBtn" class="customGPlusSignIn"><span class="icon"></span><span class="buttonText">Google</span></div>');
+
+	gapi.load('auth2', function(){
+		var auth2 = gapi.auth2.init({
+			client_id: '535690683952-ee1b89i0c954efmvilbc1rgomvhth0kb.apps.googleusercontent.com',
+			cookiepolicy: 'single_host_origin',
+		});
+		var element = document.getElementById(id);
+		auth2.attachClickHandler(element, {},	onSignIn);
 	});
 }
