@@ -1,7 +1,7 @@
 
 function startScene(){
 	loadGoogle();
-	setScene("login");
+	
 }
 
 //=================
@@ -62,11 +62,16 @@ function setScene(scene_type){
 // Google Login
 function loadGoogle(){
 	gapi.load('auth2', function(){
-		gapi.auth2.init({
+		var auth2 = gapi.auth2.init({
 			client_id: '535690683952-ee1b89i0c954efmvilbc1rgomvhth0kb.apps.googleusercontent.com',
 			cookiepolicy: 'single_host_origin',
 		});
-		//render_google_login_button("g_mysignin");
+		auth2.isSignedIn.listen();
+		auth2.currentUser.listen();
+		if (auth2.isSignedIn.get() == true) {
+			auth2.signIn();
+		}
+		setScene("login");
 	});
 }
 function onSignIn(googleUser) {
