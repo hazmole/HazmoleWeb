@@ -92,7 +92,8 @@ function getGoogleUserName(){
 }
 function render_google_login_button(id){
 	if(!document.getElementById(id)) return;
-
+	
+	$("#"+id).empty();
 	$("#"+id).append('<div id="customBtn" class="customGPlusSignIn"><span class="icon"></span><span class="buttonText">Google</span></div>');
 	var element = document.getElementById(id);
 	gapi.auth2.getAuthInstance().attachClickHandler(element, {},	onSignIn, function(error) {
