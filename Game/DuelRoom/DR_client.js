@@ -8,8 +8,7 @@ function startScene(){
 function build_LoginScene(){
 	var html="";
 	html += "<banner></banner>";
-	html += "<block style='top:100px;left:350px;width:800px;'>";
-	html += '<block id="user_message"></block><hr></block>';
+	html += '<block style="top:100px;left:350px;width:800px;"><block id="user_message"></block></block>';
 	html += '<block style="top:180px;left:350px;">';
 	html += '<block id="deck_panel" class="func_panel" style="top:0px;left:0px;  "><btitle>建構你的牌組</btitle><br></block>';
 	html += '<block id="duel_panel" class="func_panel" style="top:0px;left:270px;"><btitle>進入對戰房間</btitle><br></block>';
@@ -81,7 +80,6 @@ function getGoogleUserName(){
 	else			return "遊客";
 }
 function render_google_login_button(id){
-	$("#"+id).append('<span class="label">Sign in with:</span>');
 	$("#"+id).append('<div id="customBtn" class="customGPlusSignIn"><span class="icon"></span><span class="buttonText">Google</span></div>');
 
 	gapi.load('auth2', function(){
