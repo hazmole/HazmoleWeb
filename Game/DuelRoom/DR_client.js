@@ -21,7 +21,8 @@ function build_LoginScene(){
 }
 function update_LoginScene(){
 	if(isLogin())	$("#user_message").append("歡迎，"+getGoogleUserName()+'<br><a href="#" onclick="signOut();">Sign out</a>');
-	else			$("#user_message").append('喔喔！你還沒有登入呢！<br><div class="g-signin2" data-onsuccess="onSignIn"></div>');
+	else		{	$("#user_message").append('喔喔！你還沒有登入呢！<br><div class="g-signin2" data-onsuccess="onSignIn"></div>');
+					render_google_login_button("g-signin2");}
 	$("#deck_panel").addClass(isLogin()?"blue_panel":"gray_panel");
 	$("#duel_panel").addClass(isLogin()?"red_panel" :"gray_panel");
 	$("#view_panel").addClass("green_panel");
@@ -76,4 +77,14 @@ function getGoogleIdToken(){
 function getGoogleUserName(){
 	if(isLogin())	return gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile().getName();
 	else			return "遊客";
+}
+function render_google_login_button(id){
+gapi.signin2.render(id, {
+		'scope': 'profile',
+		'width': 240,
+		'height': 50,
+		'longtitle': true,
+		'theme': 'dark',
+		'onsuccess': onSignIn,
+	});
 }
