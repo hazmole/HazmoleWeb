@@ -67,10 +67,6 @@ function loadGoogle(){
 			client_id: '535690683952-ee1b89i0c954efmvilbc1rgomvhth0kb.apps.googleusercontent.com',
 			cookiepolicy: 'single_host_origin',
 		}).then(function(auth2){
-			if (auth2.isSignedIn.get() == true) {
-				auth2.signIn();
-				console.log("already signed in");
-			}
 			setScene("login");
 		});
 	});
