@@ -63,6 +63,7 @@ function setScene(scene_type){
 function onSignIn(googleUser) {
 	var id_token = googleUser.getAuthResponse().id_token;
 	console.log("Sign in!");
+	console.log(gapi.auth2.getAuthInstance());
 }
 function signOut(){
 	gapi.auth2.getAuthInstance().signOut();
@@ -89,6 +90,8 @@ function render_google_login_button(id){
 			cookiepolicy: 'single_host_origin',
 		});
 		var element = document.getElementById(id);
-		auth2.attachClickHandler(element, {},	onSignIn);
+		auth2.attachClickHandler(element, {},	onSignIn, function(error) {
+        	alert(JSON.stringify(error, undefined, 2));
+        });
 	});
 }
