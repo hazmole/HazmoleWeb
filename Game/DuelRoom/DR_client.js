@@ -1,6 +1,6 @@
 
 function startScene(){
-	loadGoogle();
+	//loadGoogle();
 	
 }
 
@@ -57,7 +57,6 @@ function setScene(scene_type){
 		case "room":	build_DualRoomScene();	break;
 	}
 }
-
 //=================
 // Google Login
 function loadGoogle(){
@@ -92,7 +91,6 @@ function getGoogleUserName(){
 }
 function render_google_login_button(id){
 	if(!document.getElementById(id)) return;
-	
 	$("#"+id).empty();
 	$("#"+id).append('<div id="customBtn" class="customGPlusSignIn"><span class="icon"></span><span class="buttonText">Google</span></div>');
 	var element = document.getElementById(id);
