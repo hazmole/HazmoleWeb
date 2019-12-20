@@ -1,0 +1,45 @@
+<script src="https://cdn.staticfile.org/jquery/2.0.0/jquery.min.js"></script>
+<script>
+var new_user_id=2;
+
+function discord_message(id) {
+	var webHookURL = document.getElementById("webhook_URL").value;
+	if(!webHookURL) return ;
+
+	var username = (document.getElementById("name"+id).value)? document.getElementById("name"+id).value: "無名氏";
+	var message = document.getElementById("msg"+id).value;
+	if(!message) return;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", webHookURL, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify({
+        'content': message,
+        'username': username,
+    }));
+}
+
+function addUser(){
+	var block = `<input type=text id="name${new_user_id}" placeholder="名稱"> : <br/>
+	<textarea id="msg${new_user_id}" style="width:500px;"></textarea><br/>
+	<button onClick="discord_message(${new_user_id})">Send</button>
+	<hr>`;
+	new_user_id++;
+	$("#wrap").append(block);
+}
+
+</script>
+<input type=text id="webhook_URL" style="width:100%" placeholder="webhook URL"><br/>
+<hr>
+
+<div id="wrap">
+	名稱: <input type=text id="name1" placeholder="名稱"> : <br/>
+	<textarea id="msg1" style="width:500px;"></textarea>
+	<br/>
+	<button onClick="discord_message(1)">Send Message</button>
+	<hr>
+</div>
+
+<p>
+	<button onClick="addUser()">Add User</button>
+</p>
